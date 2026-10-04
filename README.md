@@ -35,7 +35,8 @@ This section describes the requirements for using the current validated implemen
 
 The current workflow relies on a ChatGPT runtime with access to the integrations required by the production path:
 
-- **Binance** — live public market data.
+- **Binance** — live public market data for crypto analysis.
+- **Twelve Data** — FX and precious-metals market data for commands such as `RUN EURUSD` and `RUN Forex Majors`.
 - **GitHub** — repository read/write access for the outbox and workflow changes.
 - **Vercel** — required for the current serverless Telegram delivery bridge and deployment management.
 
@@ -234,6 +235,7 @@ Understanding SMC is useful for evaluating the analysis output, but the infrastr
 
     [ ] ChatGPT account is available
     [ ] Binance integration is connected
+    [ ] Twelve Data integration/plugin is connected
     [ ] GitHub integration is connected
     [ ] Vercel integration is connected
     [ ] GitHub repository is created
@@ -489,7 +491,8 @@ Earlier runs independently validated the GitHub -> Actions -> Vercel -> Telegram
 | Layer | Technology | Responsibility |
 |---|---|---|
 | AI orchestration | ChatGPT | Workflow orchestration, reasoning, content generation |
-| Market data | Binance public Spot data | Live OHLCV candles |
+| Market data | Binance public Spot data | Live crypto OHLCV candles |
+| Market data | Twelve Data integration | FX and precious-metals market data |
 | Analysis | SMC reasoning | Market structure and setup interpretation |
 | Version control | Git / GitHub | Source control and content outbox |
 | CI/CD | GitHub Actions | Validation and delivery |
