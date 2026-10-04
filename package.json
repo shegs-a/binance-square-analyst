@@ -1,0 +1,9 @@
+{
+  "name": "binance-square-analyst",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Secure Vercel-to-Telegram delivery bridge for the Binance Square Analyst workflow.",
+  "engines": {
+    "node": ">=20"
+  }
+}
