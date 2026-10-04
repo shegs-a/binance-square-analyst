@@ -1,15 +1,17 @@
 {
-  "text": "🧠 BTCUSDT SMC UPDATE — 4H + 1H\n\nBTC is bullish on structure, but price is now trading directly into buy-side liquidity.\n\n4H:\n• Sell-side liquidity was swept at $84,558.\n• Price reclaimed $85K and expanded higher.\n• Last closed 4H candle: $85,309.\n• Current 4H range: $85,033–$85,470 (still forming).\n• Key buy-side liquidity: $85,428–$85,470.\n\n1H:\n• Clear higher-high/higher-low sequence after the $84.7K–$85.0K reclaim.\n• Momentum remains bullish, but the latest 1H candles are compressing beneath $85.47K.\n• Current price is around $85.39K.\n\nSMC PLAN 👇\n\n🟢 LONG\nPrefer a retrace into $85,100–$85,250 followed by bullish 15M displacement/reclaim.\nTargets: $85,470 → $85,650 → $86,000+.\n\n🟢 BREAKOUT LONG\nA clean 1H/4H acceptance above $85,470 opens room toward $85,650 and $86K.\n\n🔴 SHORT\nNo blind short here. Wait for a sweep of $85,428–$85,470 followed by bearish displacement and a loss of ~$85,280/$85,100.\nDownside targets: $85,033 → $84,890 → $84,558.\n\n⚠️ Current read: BULLISH, but extended into liquidity. The higher-probability play is confirmation/retest, not chasing the current candle.\n\n$BTC #BTC #Bitcoin #SMC #CryptoTrading #BinanceSquare\n\nEducational market analysis — not financial advice.",
+  "text": "🧠 BTCUSDT SMC SETUP — LIVE\n\nBTC remains structurally bullish, but price is pressing into buy-side liquidity. The setup is to wait for confirmation — not chase.\n\nHTF READ\n• Daily structure is recovering from the ~$83.9K sell-side sweep and has reclaimed ~$85K.\n• 4H has expanded from the ~$84.5K–$84.7K demand area and is trading above the $85K reclaim.\n• Key overhead liquidity sits around $85,428–$85,470.\n\n1H / 15M\n• 1H structure remains bullish with higher highs/higher lows.\n• 15M momentum is still positive, but price is extended near the current highs.\n• BTC spot is around $85,376 on the latest Binance price tick.\n\n🎯 PRIMARY LONG\nWait for a retrace into ~$85,100–$85,250, then require bullish 15M displacement/reclaim before entry.\n\nTargets:\n→ $85,470\n→ $85,650\n→ $86,000+\n\nInvalidation: sustained loss of ~$85,033, with stronger bearish invalidation below ~$84,558.\n\n🚀 BREAKOUT ALTERNATIVE\nIf BTC cleanly accepts above $85,470 on 1H/4H structure, continuation toward $85,650 and $86K becomes the cleaner momentum scenario.\n\n🔴 SHORT ONLY IF CONFIRMED\nA sweep through $85,428–$85,470 followed by bearish 15M displacement and loss of ~$85,250 would open a short setup toward $85,033 → $84,890 → $84,558.\n\n⚠️ SMC verdict: BULLISH, but currently extended into liquidity. Patience beats chasing.\n\n$BTC #BTC #Bitcoin #SMC #PriceAction #BinanceSquare\n\nEducational market analysis — not financial advice.",
   "asset": "BTCUSDT",
-  "timeframe": "4H+1H",
-  "timestamp": "2026-10-04T19:15:00Z",
-  "source": "ChatGPT + Binance plugin production SMC analysis",
+  "timeframe": "Daily+4H+1H+15M",
+  "timestamp": "2026-10-04T19:21:00Z",
+  "source": "ChatGPT + Binance public spot OHLCV",
   "test": false,
   "live_binance_data": true,
   "analysis": {
     "bias": "bullish",
-    "liquidity_zone": "85428-85470",
+    "primary_setup": "long_retest",
     "long_retest_zone": "85100-85250",
-    "bearish_confirmation": "loss of 85280/85100 after liquidity sweep"
+    "buy_side_liquidity": "85428-85470",
+    "targets": ["85470","85650","86000+"],
+    "invalidation": "sustained loss of 85033; stronger invalidation below 84558"
   }
 }
