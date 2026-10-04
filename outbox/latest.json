@@ -1,8 +1,9 @@
 {
-  "text": "🧪 BINANCE SQUARE AUTOMATION — RUN PIPELINE TEST\n\nThis is a production-path test of the RUN-triggered workflow.\n\nFlow: ChatGPT → GitHub outbox → GitHub Actions → Vercel → Telegram.\n\nNo market setup is being published in this test.",
-  "asset": "PIPELINE_TEST",
-  "timeframe": "N/A",
-  "timestamp": "2026-10-04T18:22:00Z",
-  "source": "ChatGPT RUN-triggered workflow test",
-  "test": true
+  "text": "🧪 BINANCE SQUARE AUTOMATION — LIVE DATA FLOW TEST\n\nBTCUSDT • ETHUSDT • BNBUSDT\n\nBinance plugin → ChatGPT SMC analysis layer → GitHub outbox → GitHub Actions → Vercel → Telegram\n\nLIVE BTC SNAPSHOT\n• 4H close: $85,338.82\n• 4H high: $85,470.00\n• 4H low: $84,719.99\n• Structure test: price has reclaimed the $85K area after the recent sell-side sweep.\n\nThis message is a TEST of the complete production delivery path using live Binance market data. It is not a trading signal and should not be treated as one.",
+  "asset": "BTCUSDT",
+  "timeframe": "4H",
+  "timestamp": "2026-10-04T19:02:39.736Z",
+  "source": "ChatGPT + Binance plugin live-data full-flow test",
+  "test": true,
+  "live_binance_data": true
 }
