@@ -1,9 +1,15 @@
 {
-  "text": "🧪 BINANCE SQUARE AUTOMATION — LIVE DATA FLOW TEST\n\nBTCUSDT • ETHUSDT • BNBUSDT\n\nBinance plugin → ChatGPT SMC analysis layer → GitHub outbox → GitHub Actions → Vercel → Telegram\n\nLIVE BTC SNAPSHOT\n• 4H close: $85,338.82\n• 4H high: $85,470.00\n• 4H low: $84,719.99\n• Structure test: price has reclaimed the $85K area after the recent sell-side sweep.\n\nThis message is a TEST of the complete production delivery path using live Binance market data. It is not a trading signal and should not be treated as one.",
+  "text": "🧠 BTCUSDT SMC UPDATE — 4H + 1H\n\nBTC is bullish on structure, but price is now trading directly into buy-side liquidity.\n\n4H:\n• Sell-side liquidity was swept at $84,558.\n• Price reclaimed $85K and expanded higher.\n• Last closed 4H candle: $85,309.\n• Current 4H range: $85,033–$85,470 (still forming).\n• Key buy-side liquidity: $85,428–$85,470.\n\n1H:\n• Clear higher-high/higher-low sequence after the $84.7K–$85.0K reclaim.\n• Momentum remains bullish, but the latest 1H candles are compressing beneath $85.47K.\n• Current price is around $85.39K.\n\nSMC PLAN 👇\n\n🟢 LONG\nPrefer a retrace into $85,100–$85,250 followed by bullish 15M displacement/reclaim.\nTargets: $85,470 → $85,650 → $86,000+.\n\n🟢 BREAKOUT LONG\nA clean 1H/4H acceptance above $85,470 opens room toward $85,650 and $86K.\n\n🔴 SHORT\nNo blind short here. Wait for a sweep of $85,428–$85,470 followed by bearish displacement and a loss of ~$85,280/$85,100.\nDownside targets: $85,033 → $84,890 → $84,558.\n\n⚠️ Current read: BULLISH, but extended into liquidity. The higher-probability play is confirmation/retest, not chasing the current candle.\n\n$BTC #BTC #Bitcoin #SMC #CryptoTrading #BinanceSquare\n\nEducational market analysis — not financial advice.",
   "asset": "BTCUSDT",
-  "timeframe": "4H",
-  "timestamp": "2026-10-04T19:02:39.736Z",
-  "source": "ChatGPT + Binance plugin live-data full-flow test",
-  "test": true,
-  "live_binance_data": true
+  "timeframe": "4H+1H",
+  "timestamp": "2026-10-04T19:15:00Z",
+  "source": "ChatGPT + Binance plugin production SMC analysis",
+  "test": false,
+  "live_binance_data": true,
+  "analysis": {
+    "bias": "bullish",
+    "liquidity_zone": "85428-85470",
+    "long_retest_zone": "85100-85250",
+    "bearish_confirmation": "loss of 85280/85100 after liquidity sweep"
+  }
 }
