@@ -26,6 +26,235 @@ The result is a lightweight event-driven pipeline with no database, no trading e
 
 ---
 
+
+# Requirements & Prerequisites
+
+This section describes the requirements for using the current validated implementation and, separately, the requirements for developing or modifying it.
+
+## 1. ChatGPT
+
+The current workflow relies on a ChatGPT runtime with access to the integrations required by the production path:
+
+- **Binance** — live public market data.
+- **GitHub** — repository read/write access for the outbox and workflow changes.
+- **Vercel** — required for the current serverless Telegram delivery bridge and deployment management.
+
+The exact availability of integrations and capabilities can depend on the ChatGPT product, account, and integration configuration.
+
+> **Important:** Vercel is required for the current complete implementation because Telegram delivery uses the Vercel bridge. It is not a conceptual requirement for the SMC analysis logic itself.
+
+## 2. GitHub
+
+You need:
+
+- a GitHub account;
+- a repository for the project;
+- permission to create/update files and commits in the repository;
+- GitHub Actions enabled.
+
+The current reference repository is:
+
+    shegs-a/binance-square-analyst
+
+The workflow uses GitHub both as source control and as the production content outbox.
+
+## 3. Vercel
+
+You need a Vercel account/project for the current Telegram delivery architecture.
+
+The Vercel project must be able to:
+
+- deploy the serverless API;
+- connect to the GitHub repository;
+- store production environment variables;
+- expose the Telegram bridge endpoint.
+
+The current production project is:
+
+    binance-square-analyst
+
+The current production endpoint is:
+
+    https://binance-square-analyst.vercel.app/api/telegram
+
+A different Vercel project or domain can be used, provided the GitHub Actions workflow is updated accordingly.
+
+## 4. Binance market-data access
+
+A Binance trading account is **not required** for the current analysis workflow.
+
+The production analysis uses public market data and does not require:
+
+- Binance trading API keys;
+- account balances;
+- order permissions;
+- withdrawal permissions;
+- private account access.
+
+The system is deliberately read-only from a trading perspective.
+
+## 5. Telegram
+
+You need:
+
+- a Telegram account;
+- a Telegram bot created through BotFather;
+- a destination Telegram chat where the generated content should be delivered.
+
+The Vercel bridge requires these environment variables:
+
+    TELEGRAM_BOT_TOKEN
+    TELEGRAM_CHAT_ID
+
+The bot token must remain in Vercel environment variables and must never be committed to GitHub or placed in the outbox payload.
+
+## 6. Production secrets
+
+The current implementation uses platform-managed secrets.
+
+### Vercel environment variables
+
+Required:
+
+    TELEGRAM_BOT_TOKEN
+    TELEGRAM_CHAT_ID
+    BRIDGE_SECRET
+
+Optional:
+
+    MARKET_DATA_SECRET
+
+MARKET_DATA_SECRET is only needed if the optional api/market-data.js gateway is used.
+
+### GitHub Actions secret
+
+Required:
+
+    VERCEL_BRIDGE_SECRET
+
+This value must match the Vercel BRIDGE_SECRET.
+
+Use a strong randomly generated value.
+
+> Never put secret values in source control, README files, issue comments, screenshots, outbox/latest.json, or HTTP request bodies beyond the intended authentication header.
+
+## 7. GitHub Actions
+
+The repository must contain:
+
+    .github/workflows/deliver-square-content.yml
+
+The workflow:
+
+- triggers when outbox/latest.json changes;
+- validates the generated payload;
+- reads VERCEL_BRIDGE_SECRET from GitHub Actions Secrets;
+- calls the Vercel Telegram bridge;
+- fails visibly when delivery fails.
+
+The workflow also supports manual workflow_dispatch execution.
+
+## 8. Node.js and local development
+
+For local development or modification, install:
+
+- Node.js 20 or newer;
+- npm;
+- Git.
+
+The Vercel CLI is optional.
+
+Typical development commands include:
+
+    npm install
+    npm test
+
+For local serverless development, the Vercel CLI can be used with:
+
+    vercel dev
+
+Local development is **not required** to run the validated ChatGPT-driven production workflow once the cloud components are configured.
+
+## 9. ChatGPT scheduled trigger
+
+The current daily workflow also uses a ChatGPT scheduled task.
+
+The scheduled task is intentionally only a trigger:
+
+    09:00
+       |
+       v
+    ChatGPT reminder
+       |
+       v
+    User replies RUN
+       |
+       v
+    Normal ChatGPT runtime
+       |
+       v
+    Full production workflow
+
+The scheduled task therefore requires access to ChatGPT's scheduled-task functionality.
+
+## 10. User-provided configuration
+
+Before running the complete implementation, configure:
+
+- GitHub repository;
+- GitHub Actions;
+- Vercel project;
+- Telegram bot;
+- Telegram destination chat;
+- production secrets in the appropriate secret stores;
+- ChatGPT integrations;
+- scheduled trigger, if daily automation is desired.
+
+The user does **not** need to paste production secrets into ChatGPT.
+
+## 11. Knowledge requirements
+
+No advanced programming knowledge is required simply to use the finished workflow.
+
+For development or modification, familiarity with the following is useful:
+
+- Git and GitHub;
+- GitHub Actions;
+- JSON;
+- REST APIs;
+- HTTP authentication headers;
+- environment variables and secret management;
+- Node.js/serverless functions;
+- Telegram Bot API;
+- basic market-data concepts.
+
+Understanding SMC is useful for evaluating the analysis output, but the infrastructure does not require the user to manually encode SMC rules.
+
+## 12. Minimum setup checklist
+
+    [ ] ChatGPT account is available
+    [ ] Binance integration is connected
+    [ ] GitHub integration is connected
+    [ ] Vercel integration is connected
+    [ ] GitHub repository is created
+    [ ] ChatGPT has sufficient GitHub repository permissions
+    [ ] GitHub Actions is enabled
+    [ ] Vercel project is created
+    [ ] Vercel project is connected to GitHub
+    [ ] Telegram bot is created
+    [ ] Telegram destination chat is configured
+    [ ] TELEGRAM_BOT_TOKEN is configured in Vercel
+    [ ] TELEGRAM_CHAT_ID is configured in Vercel
+    [ ] BRIDGE_SECRET is configured in Vercel
+    [ ] VERCEL_BRIDGE_SECRET is configured in GitHub Actions
+    [ ] Production Vercel deployment succeeds
+    [ ] Telegram delivery endpoint is tested
+    [ ] ChatGPT scheduled trigger is configured, if required
+
+Once configured, the normal production trigger is simply:
+
+    RUN
+
 # Production Architecture
 
 The current validated workflow is:
