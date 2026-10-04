@@ -1145,3 +1145,106 @@ No part of this repository executes trades or manages funds.
 Private/personal project.
 
 If this repository is later released as open source, add an explicit license appropriate to the intended use.
+
+---
+
+# Multi-Asset Market Data Routing
+
+The workflow now uses a multi-source market-data model. The command determines the appropriate provider; the SMC reasoning layer remains the same.
+
+| Command | Provider | Asset class |
+|---|---|---|
+| `RUN BTCUSDT` | Binance | Crypto |
+| `RUN ETHUSDT` | Binance | Crypto |
+| `RUN BNBUSDT` | Binance | Crypto |
+| `RUN EURUSD` | Twelve Data | Forex |
+| `RUN GBPUSD` | Twelve Data | Forex |
+| `RUN GBPJPY` | Twelve Data | Forex |
+| `RUN USDJPY` | Twelve Data | Forex |
+| `RUN XAUUSD` | Twelve Data | Gold |
+| `RUN XAGUSD` | Twelve Data | Silver |
+| `RUN Forex Majors` | Twelve Data | Forex basket |
+
+## Routing principle
+
+The market-data source is an adapter. It does **not** change the SMC reasoning process.
+
+For crypto:
+
+    RUN BTCUSDT
+         |
+         v
+    Binance market data
+         |
+         v
+    ChatGPT SMC reasoning
+
+For FX and metals:
+
+    RUN EURUSD / RUN XAUUSD
+              |
+              v
+       Twelve Data integration
+              |
+              v
+       ChatGPT SMC reasoning
+
+The normal analysis remains:
+
+    Daily -> 4H -> 1H -> 15M
+
+followed by contextual interpretation of structure, liquidity, displacement, order blocks, fair-value gaps when justified, premium/discount, retracement, invalidation and targets.
+
+## Twelve Data ChatGPT integration
+
+The current implementation uses the connected **Twelve Data ChatGPT integration/plugin** for FX and metals.
+
+A Twelve Data API key is **not required in this repository** when the connected ChatGPT integration is used directly.
+
+Do not add Twelve Data credentials to:
+
+- GitHub Actions
+- Vercel environment variables
+- `outbox/latest.json`
+- README files
+- source code
+
+unless a future server-side Twelve Data adapter is intentionally introduced.
+
+## Broker-feed principle
+
+Twelve Data provides an aggregated market-data view rather than a broker-executable CFD quote. Forex and metals are decentralized markets, so prices and candle construction can differ between providers and brokers.
+
+That is acceptable for this workflow.
+
+The output is **market intelligence and level discovery**, not an execution-price guarantee. Generated levels can be manually compared against the relevant GFT, Deriv, or other MT5 broker feed before execution.
+
+The project intentionally does not attempt to normalize every broker's CFD feed.
+
+See `docs/MARKET_DATA_ROUTING.md` for the detailed routing contract.
+
+## Example commands
+
+    RUN EURUSD
+    RUN GBPJPY
+    RUN XAUUSD
+    RUN XAGUSD
+    RUN Forex Majors
+
+For a single symbol, ChatGPT should resolve the requested instrument, retrieve the appropriate Twelve Data market data, perform the multi-timeframe SMC analysis, generate the content, and write the resulting payload to `outbox/latest.json`.
+
+For `RUN Forex Majors`, ChatGPT should retrieve and analyse the configured major FX pairs through Twelve Data and produce the requested content pack.
+
+## Proven Twelve Data test
+
+The Twelve Data integration has been successfully exercised with a live EUR/USD analysis using:
+
+- Daily
+- 4H
+- 1H
+- 15M
+- current quote data
+
+The test confirmed that Twelve Data can serve as the FX market-data adapter without changing the existing ChatGPT SMC reasoning or GitHub -> GitHub Actions -> Vercel -> Telegram delivery path.
+
+---
