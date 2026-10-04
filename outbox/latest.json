@@ -1,8 +1,8 @@
 {
-  "text": "🧠 BTCUSDT 4H SMC TEST — Binance\n\nBTC is showing a bullish recovery on the 4H, but I would NOT chase the current move.\n\nThe important sequence:\n• Sell-side liquidity was taken around $84,525 on Oct 3.\n• Price reclaimed the $84,890–$85,037 area.\n• The latest closed 4H candle pushed through $85,037 and closed around $85,106.\n• The current 16:00–20:00 candle is still forming and has already traded up to ~$85,428.\n\nSMC read:\n🟢 Bias: Bullish recovery\n🎯 Buy-side liquidity: ~$85,428 and above\n📍 Bullish FVG developing: ~$84,890–$85,033\n📍 Deeper demand: ~$84,525–$84,600\n\nThe cleaner trade is patience.\n\nLONG SCENARIO:\nWait for price to retrace into the ~$84,890–$85,033 imbalance and show bullish displacement/5M confirmation.\n\nPotential objectives:\n→ $85,428\n→ $85,600\n→ $86,000+\n\nInvalidation: sustained 4H acceptance below the demand/reclaim zone.\n\nSHORT SCENARIO:\nOnly becomes interesting if BTC sweeps the ~$85,428 buy-side liquidity and then gives a clear bearish displacement/rejection. Without that confirmation, shorting into the recovery is low quality.\n\n⚠️ The current 4H candle is incomplete, so this is a conditional setup — not a blind entry.\n\n$BTC #BTC #Bitcoin #SMC #PriceAction #BinanceSquare",
-  "asset": "BTCUSDT",
-  "timeframe": "4H",
-  "timestamp": "2026-10-04T18:15:21Z",
-  "source": "Binance public BTCUSDT spot OHLCV data",
+  "text": "🧪 BINANCE SQUARE AUTOMATION — RUN PIPELINE TEST\n\nThis is a production-path test of the RUN-triggered workflow.\n\nFlow: ChatGPT → GitHub outbox → GitHub Actions → Vercel → Telegram.\n\nNo market setup is being published in this test.",
+  "asset": "PIPELINE_TEST",
+  "timeframe": "N/A",
+  "timestamp": "2026-10-04T18:22:00Z",
+  "source": "ChatGPT RUN-triggered workflow test",
   "test": true
 }
