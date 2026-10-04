@@ -1,8 +1,8 @@
 # Binance Square Analyst
 
-A small, secure **Vercel serverless bridge** that delivers Binance Square analysis/content packs to a private Telegram chat.
+A small, secure set of **Vercel serverless functions** supporting the Binance Square Analyst workflow: a market-data gateway that retrieves public Binance OHLCV data, and a delivery bridge that posts finished content packs to a private Telegram chat.
 
-This repository is intentionally lightweight. It does **not** perform market analysis itself. Its job is to provide a secure delivery layer between an external content-generation workflow and Telegram.
+This repository is intentionally lightweight. It does **not** perform market analysis itself. Its jobs are to (1) provide clean, normalized Binance candle data to the external SMC reasoning workflow, and (2) securely deliver that workflow's finished content to Telegram.
 
 ---
 
@@ -61,7 +61,10 @@ The bridge keeps the Telegram BotFather token on the server. The caller only nee
 ```text
 binance-square-analyst/
 ├── api/
-│   └── telegram.js       # Vercel serverless Telegram endpoint
+│   ├── telegram.js       # Vercel serverless Telegram endpoint
+│   └── market-data.js    # Vercel serverless Binance market-data gateway
+├── test/
+│   └── market-data.test.mjs  # Lightweight tests for the market-data gateway
 ├── package.json          # Minimal Node/Vercel project metadata
 └── README.md             # This documentation
 ```
@@ -109,13 +112,15 @@ Keep the chat ID in Vercel as an environment variable rather than hard-coding it
 
 # 3. Environment Variables
 
-The bridge requires exactly three server-side variables.
+The Telegram bridge requires three server-side variables, and the market
+data gateway (see [Section 14](#14-market-data-api)) requires one more.
 
-| Variable | Purpose |
-|---|---|
-| `TELEGRAM_BOT_TOKEN` | BotFather token |
-| `TELEGRAM_CHAT_ID` | Destination Telegram chat |
-| `BRIDGE_SECRET` | Shared secret authenticating callers |
+| Variable | Used by | Purpose |
+|---|---|---|
+| `TELEGRAM_BOT_TOKEN` | `api/telegram.js` | BotFather token |
+| `TELEGRAM_CHAT_ID` | `api/telegram.js` | Destination Telegram chat |
+| `BRIDGE_SECRET` | `api/telegram.js` | Shared secret authenticating callers |
+| `MARKET_DATA_SECRET` | `api/market-data.js` | Shared secret authenticating callers of the market-data gateway |
 
 Example:
 
@@ -123,7 +128,11 @@ Example:
 TELEGRAM_BOT_TOKEN=123456789:REDACTED
 TELEGRAM_CHAT_ID=123456789
 BRIDGE_SECRET=generate-a-long-random-secret
+MARKET_DATA_SECRET=generate-a-different-long-random-secret
 ```
+
+`MARKET_DATA_SECRET` is independent of `BRIDGE_SECRET` — use a distinct
+random value, not the same one.
 
 ### Generating BRIDGE_SECRET
 
@@ -449,7 +458,128 @@ The bridge will deliver the content to Telegram.
 
 ---
 
-# 14. What This Repository Does NOT Do
+# 14. Market Data API
+
+In addition to the Telegram delivery bridge, this repository exposes a
+small, authenticated **Binance market-data gateway**. Its only job is to
+fetch public Binance Spot OHLCV candle data and return it as clean JSON.
+
+```text
+ChatGPT
+  │
+  │ GET /api/market-data
+  │ x-market-data-secret
+  ▼
+Vercel Serverless Function
+api/market-data.js
+  │
+  │ public Spot klines (no API key)
+  ▼
+https://data-api.binance.vision/api/v3/klines
+  │
+  ▼
+Normalized OHLCV JSON
+  │
+  ▼
+ChatGPT performs SMC reasoning
+```
+
+**This endpoint does NOT perform technical analysis or make trading
+decisions.** It does not compute market structure, BOS/CHOCH, order
+blocks, fair value gaps, bias, or signals of any kind. It only retrieves
+and normalizes raw Binance candle data — all SMC reasoning stays with the
+calling workflow (ChatGPT).
+
+### Endpoint
+
+```text
+GET /api/market-data
+```
+
+### Supported symbols
+
+- `BTCUSDT`
+- `ETHUSDT`
+- `BNBUSDT`
+
+### Supported intervals
+
+- `1d`
+- `4h`
+- `1h`
+- `15m`
+- `5m`
+
+### Query parameters
+
+| Parameter | Required | Default | Notes |
+|---|---|---|---|
+| `symbol` | No | `BTCUSDT` | Case-insensitive; must be one of the supported symbols |
+| `interval` | No | `4h` | Must be one of the supported intervals |
+| `limit` | No | `100` | Integer from 1–500 |
+
+### Authentication
+
+```text
+x-market-data-secret: <MARKET_DATA_SECRET>
+```
+
+Missing or incorrect credentials return `401 Unauthorized`.
+
+### Example request
+
+```bash
+curl -s \
+  "https://YOUR-VERCEL-DOMAIN.vercel.app/api/market-data?symbol=BTCUSDT&interval=4h&limit=100" \
+  -H "x-market-data-secret: YOUR_MARKET_DATA_SECRET"
+```
+
+### Example response
+
+```json
+{
+  "ok": true,
+  "source": "binance",
+  "symbol": "BTCUSDT",
+  "interval": "4h",
+  "limit": 100,
+  "candles": [
+    {
+      "openTime": 1791134400000,
+      "open": 84840.88,
+      "high": 85112.65,
+      "low": 84808.11,
+      "close": 85106,
+      "volume": 1234.56,
+      "closeTime": 1791148799999
+    }
+  ],
+  "candleStatus": {
+    "lastCandle": "possibly_incomplete"
+  },
+  "lastCandle": {
+    "openTime": 1791134400000,
+    "closeTime": 1791148799999,
+    "isClosed": false
+  }
+}
+```
+
+### Notes
+
+- Candle ordering matches Binance's chronological order exactly — nothing
+  is reordered, aggregated, or smoothed.
+- The most recent candle is never dropped. `lastCandle.isClosed` tells the
+  caller whether it may still be forming, based on comparing its
+  `closeTime` to the current server time.
+- No Binance API key is used or required — this uses Binance's public
+  Spot market-data host (`data-api.binance.vision`).
+- The upstream request has a bounded timeout so a slow/unresponsive
+  Binance API cannot hang the function.
+
+---
+
+# 15. What This Repository Does NOT Do
 
 This project currently does not:
 
@@ -462,11 +592,19 @@ This project currently does not:
 - Manage Binance user accounts
 - Place Binance orders
 
-It is intentionally only the **secure Telegram delivery layer**.
+It intentionally stays limited to two small, boring pieces:
+
+1. A **secure Telegram delivery layer** (`api/telegram.js`).
+2. A **secure, read-only Binance public market-data gateway**
+   (`api/market-data.js`) that retrieves and normalizes OHLCV candles —
+   nothing more.
+
+All SMC reasoning, structure analysis, and trading decisions remain
+outside this repository, in the calling workflow.
 
 ---
 
-# 15. Future Extensions
+# 16. Future Extensions
 
 Possible future versions can add:
 
@@ -514,7 +652,7 @@ Telegram
 
 ---
 
-# 16. Operational Recommendation
+# 17. Operational Recommendation
 
 For the first production version, keep this bridge deliberately boring.
 
