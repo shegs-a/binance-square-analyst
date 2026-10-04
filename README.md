@@ -1,679 +1,918 @@
 # Binance Square Analyst
 
-A small, secure set of **Vercel serverless functions** supporting the Binance Square Analyst workflow: a market-data gateway that retrieves public Binance OHLCV data, and a delivery bridge that posts finished content packs to a private Telegram chat.
+> An AI-driven market-analysis and content-delivery pipeline combining live Binance market data, discretionary SMC reasoning, GitHub automation, Vercel serverless infrastructure, and Telegram delivery.
 
-This repository is intentionally lightweight. It does **not** perform market analysis itself. Its jobs are to (1) provide clean, normalized Binance candle data to the external SMC reasoning workflow, and (2) securely deliver that workflow's finished content to Telegram.
+![Architecture](https://img.shields.io/badge/Architecture-AI%20%2B%20Serverless%20%2B%20GitHub-blue)
+![Vercel](https://img.shields.io/badge/Runtime-Vercel-black)
+![GitHub Actions](https://img.shields.io/badge/Automation-GitHub%20Actions-2088FF)
+![Telegram](https://img.shields.io/badge/Delivery-Telegram-26A5E4)
+![Binance](https://img.shields.io/badge/Market%20Data-Binance-F0B90B)
 
----
+## Overview
 
-## Architecture
+Binance Square Analyst is a production-oriented prototype for generating and delivering Binance Square market-analysis content.
 
-```text
-┌─────────────────────────────┐
-│ Binance Public Market Data  │
-└──────────────┬──────────────┘
-               │
-               ▼
-┌─────────────────────────────┐
-│ SMC Analysis / Content      │
-│ Generation Workflow         │
-└──────────────┬──────────────┘
-               │
-               │ POST /api/telegram
-               │ x-bridge-secret
-               ▼
-┌─────────────────────────────┐
-│ Vercel Serverless Function  │
-│ api/telegram.js             │
-└──────────────┬──────────────┘
-               │
-               │ Telegram Bot API
-               ▼
-┌─────────────────────────────┐
-│ Private Telegram Chat       │
-└─────────────────────────────┘
-```
+The system deliberately separates responsibilities:
 
-The bridge keeps the Telegram BotFather token on the server. The caller only needs the shared `BRIDGE_SECRET`.
+- **ChatGPT** — orchestration, market reasoning, and content generation.
+- **Binance** — fresh public Spot market data.
+- **SMC reasoning** — contextual multi-timeframe interpretation rather than a rigid indicator engine.
+- **GitHub** — version-controlled outbox and event trigger.
+- **GitHub Actions** — deterministic validation and delivery orchestration.
+- **Vercel** — secure serverless Telegram bridge.
+- **Telegram** — private delivery channel.
+
+The result is a lightweight event-driven pipeline with no database, no trading execution, and no need to expose Telegram or trading credentials to the analysis layer.
 
 ---
 
-# Features
+# Production Architecture
 
-- Vercel serverless function
-- Node.js 20+
-- Shared-secret authentication
-- Telegram Bot API integration
-- Automatic Telegram 4096-character message splitting
-- Splitting prefers paragraph/newline boundaries
-- Safe HTML escaping
-- Sequential delivery preserves message order
-- No Telegram credentials in request payloads
-- No database required
-- No external npm dependencies
-- Detailed error responses
-- Production-oriented comments and documentation
+The current validated workflow is:
+
+    09:00 scheduled trigger
+            |
+            v
+    ChatGPT reminder
+            |
+       user replies RUN
+            |
+            v
+    ChatGPT normal runtime
+            |
+            +------> Binance integration
+            |        fresh BTC/ETH/BNB candles
+            |
+            v
+    Multi-timeframe SMC reasoning
+       Daily -> 4H -> 1H -> 15M
+            |
+            v
+    Binance Square content + metadata
+            |
+            v
+    GitHub outbox/latest.json
+            |
+        git push
+            |
+            v
+    GitHub Actions
+            |
+        HTTPS POST
+            |
+            v
+    Vercel /api/telegram
+            |
+       Telegram Bot API
+            |
+            v
+    Private Telegram chat
+
+## Why the scheduled task is only a trigger
+
+The daily scheduled task intentionally acts as a trigger rather than attempting to execute the entire workflow.
+
+At 09:00 the user receives a reminder. Replying RUN moves execution into the normal ChatGPT runtime, where the connected Binance and GitHub capabilities can be used.
+
+This creates a simple human-in-the-loop boundary:
+
+    Scheduled automation
+           |
+          RUN
+           |
+    Normal AI runtime
+           |
+    Full production workflow
+
+This is simpler, easier to inspect, and avoids turning a scheduled reminder into a hidden monolithic job.
+
+---
+
+# What has actually been proven
+
+This repository is not just an architecture diagram. The critical production path has been exercised end-to-end.
+
+## Live Binance data
+
+The workflow successfully retrieved live Binance Spot OHLCV data for:
+
+- BTCUSDT
+- ETHUSDT
+- BNBUSDT
+
+using:
+
+- 1D
+- 4H
+- 1H
+- 15M
+
+The production BTC analysis also accounted for incomplete candles rather than treating an in-progress candle as confirmed structure.
+
+## SMC reasoning
+
+The analysis layer successfully produced contextual market plans using:
+
+- higher-timeframe structure;
+- BOS / CHOCH concepts;
+- liquidity sweeps;
+- buy-side and sell-side liquidity;
+- order-block context;
+- fair-value-gap context where justified;
+- displacement;
+- premium / discount;
+- retracement zones;
+- lower-timeframe confirmation;
+- invalidation;
+- targets;
+- anti-chasing logic.
+
+The repository does not attempt to reduce all of this to a rigid algorithm.
+
+The infrastructure supplies reliable data. The AI supplies contextual interpretation.
+
+## Production content generation
+
+A real production payload was generated and written to:
+
+    outbox/latest.json
+
+The payload contains both:
+
+1. publication-ready content; and
+2. structured metadata describing the analysis.
+
+Representative metadata:
+
+    {
+      "asset": "BTCUSDT",
+      "timeframe": "Daily+4H+1H+15M",
+      "test": false,
+      "live_binance_data": true,
+      "analysis": {
+        "bias": "bullish",
+        "primary_setup": "long_retest",
+        "long_retest_zone": "85100-85250",
+        "buy_side_liquidity": "85428-85470"
+      }
+    }
+
+## GitHub Actions delivery
+
+The repository contains:
+
+    .github/workflows/deliver-square-content.yml
+
+The workflow:
+
+1. triggers when outbox/latest.json changes;
+2. checks out the repository;
+3. validates that a non-empty text payload exists;
+4. reads the payload safely with jq;
+5. loads the bridge secret from GitHub Actions Secrets;
+6. POSTs the content to Vercel;
+7. fails if delivery fails.
+
+It also supports manual workflow_dispatch execution.
+
+## Vercel to Telegram
+
+The Vercel bridge was tested independently and as part of the complete production flow.
+
+It successfully:
+
+- authenticates callers with a shared secret;
+- keeps the Telegram BotFather token server-side;
+- validates incoming content;
+- escapes HTML-sensitive characters;
+- splits long Telegram messages;
+- preserves message order;
+- calls the Telegram Bot API;
+- returns message IDs;
+- reports failures cleanly.
+
+## End-to-end production test
+
+A complete production SMC content-generation run successfully traversed:
+
+    Live Binance data
+          |
+    ChatGPT SMC analysis
+          |
+    Production Square content
+          |
+    GitHub outbox
+          |
+    GitHub Actions
+          |
+    Vercel
+          |
+    Telegram
+
+Validated production workflow:
+
+- Workflow: Deliver Square Content to Telegram
+- Run: #5
+- Run ID: 37226908842
+- Commit: 41189ea8fd9cb865d9a8c9e93a17e5ec6b2aa540
+- Result: success
+
+Earlier runs independently validated the GitHub -> Actions -> Vercel -> Telegram delivery path before the live SMC production test.
 
 ---
 
 # Repository Structure
 
-```text
-binance-square-analyst/
-├── api/
-│   ├── telegram.js       # Vercel serverless Telegram endpoint
-│   └── market-data.js    # Vercel serverless Binance market-data gateway
-├── test/
-│   └── market-data.test.mjs  # Lightweight tests for the market-data gateway
-├── package.json          # Minimal Node/Vercel project metadata
-└── README.md             # This documentation
-```
+    binance-square-analyst/
+    |
+    +-- .github/
+    |   +-- workflows/
+    |       +-- deliver-square-content.yml
+    |
+    +-- api/
+    |   +-- telegram.js
+    |   +-- market-data.js
+    |
+    +-- test/
+    |   +-- market-data.test.mjs
+    |
+    +-- outbox/
+    |   +-- latest.json
+    |
+    +-- package.json
+    +-- README.md
+
+### Key files
+
+| File | Responsibility |
+|---|---|
+| api/telegram.js | Secure Vercel -> Telegram delivery bridge |
+| api/market-data.js | Optional authenticated Binance OHLCV gateway |
+| outbox/latest.json | Latest generated content and analysis metadata |
+| .github/workflows/deliver-square-content.yml | Automated outbox validation and delivery |
+| test/market-data.test.mjs | Lightweight market-data gateway tests |
+| package.json | Minimal Node/Vercel project metadata |
 
 ---
 
-# 1. Create the Telegram Bot
+# Technology Stack
 
-If you have already created the bot through BotFather, you can skip this section.
-
-In Telegram:
-
-1. Open **@BotFather**.
-2. Run `/newbot`.
-3. Give the bot a name.
-4. Give it a unique username ending in `bot`.
-5. BotFather will provide a bot token.
-
-### IMPORTANT
-
-**Do not commit the BotFather token to GitHub.**
-
-Do not put it in:
-
-- `telegram.js`
-- `README.md`
-- `.env` committed to Git
-- request bodies
-- screenshots
-- public documentation
-
-The token belongs only in Vercel's encrypted environment-variable configuration.
-
----
-
-# 2. Get the Telegram Chat ID
-
-The bridge needs to know where to send the messages.
-
-For a private Telegram chat, obtain the chat ID associated with the conversation where the bot will deliver the content.
-
-Keep the chat ID in Vercel as an environment variable rather than hard-coding it into the application.
-
----
-
-# 3. Environment Variables
-
-The Telegram bridge requires three server-side variables, and the market
-data gateway (see [Section 14](#14-market-data-api)) requires one more.
-
-| Variable | Used by | Purpose |
+| Layer | Technology | Responsibility |
 |---|---|---|
-| `TELEGRAM_BOT_TOKEN` | `api/telegram.js` | BotFather token |
-| `TELEGRAM_CHAT_ID` | `api/telegram.js` | Destination Telegram chat |
-| `BRIDGE_SECRET` | `api/telegram.js` | Shared secret authenticating callers |
-| `MARKET_DATA_SECRET` | `api/market-data.js` | Shared secret authenticating callers of the market-data gateway |
-
-Example:
-
-```text
-TELEGRAM_BOT_TOKEN=123456789:REDACTED
-TELEGRAM_CHAT_ID=123456789
-BRIDGE_SECRET=generate-a-long-random-secret
-MARKET_DATA_SECRET=generate-a-different-long-random-secret
-```
-
-`MARKET_DATA_SECRET` is independent of `BRIDGE_SECRET` — use a distinct
-random value, not the same one.
-
-### Generating BRIDGE_SECRET
-
-Use a cryptographically random value.
-
-For example, locally:
-
-```bash
-openssl rand -hex 32
-```
-
-Do not use an easily guessed value such as:
-
-```text
-password123
-telegram
-binance
-secret
-```
+| AI orchestration | ChatGPT | Workflow orchestration, reasoning, content generation |
+| Market data | Binance public Spot data | Live OHLCV candles |
+| Analysis | SMC reasoning | Market structure and setup interpretation |
+| Version control | Git / GitHub | Source control and content outbox |
+| CI/CD | GitHub Actions | Validation and delivery |
+| Serverless | Vercel | Secure Telegram bridge |
+| Messaging | Telegram Bot API | Private content delivery |
+| Runtime | Node.js 20+ | Serverless functions |
+| Data format | JSON | Machine-readable content contract |
+| Testing | Node.js test runner | Lightweight gateway validation |
 
 ---
 
-# 4. Deploy to Vercel
+# Key Engineering Decisions
 
-## Option A — Vercel Dashboard
+## 1. AI reasoning is separated from infrastructure
 
-1. Open Vercel.
-2. Select **Add New → Project**.
-3. Import this GitHub repository.
-4. Select:
+The project intentionally avoids turning SMC into a giant collection of hard-coded conditions.
 
-```text
-shegs-a/binance-square-analyst
-```
+Instead of:
 
-5. Vercel should automatically detect the Node/Vercel project.
-6. Add the following Production environment variables:
+    condition A + condition B + condition C = bullish
 
-```text
-TELEGRAM_BOT_TOKEN
-TELEGRAM_CHAT_ID
-BRIDGE_SECRET
-```
+the system uses:
 
-7. Deploy.
+    Reliable market data
+           |
+       AI reasoning
+           |
+    Structured conclusion
+           |
+    Deterministic delivery
 
-After deployment, the endpoint will be:
+This preserves contextual reasoning while keeping the infrastructure predictable.
 
-```text
-https://YOUR-VERCEL-DOMAIN.vercel.app/api/telegram
-```
+## 2. No trading execution
 
----
+This project is read-only from a trading perspective.
 
-# 5. Test the Endpoint
+It does not:
 
-The endpoint expects:
+- place orders;
+- modify positions;
+- withdraw funds;
+- access trading account balances;
+- store Binance trading credentials;
+- manage a Binance account.
 
-```http
-POST /api/telegram
-Content-Type: application/json
-x-bridge-secret: YOUR_BRIDGE_SECRET
-```
+The project is an analysis and publishing workflow, not a trading bot.
 
-Example request:
+## 3. Secrets stay outside the repository
 
-```bash
-curl -X POST \
-  "https://YOUR-VERCEL-DOMAIN.vercel.app/api/telegram" \
-  -H "Content-Type: application/json" \
-  -H "x-bridge-secret: YOUR_BRIDGE_SECRET" \
-  -d '{
-    "text": "BTC Daily Market Analysis\n\nBias: Bullish above 105000.\n\nWatch for a liquidity sweep before confirmation."
-  }'
-```
+Production secrets are stored in platform secret stores.
 
-Successful response:
+Vercel environment variables:
 
-```json
-{
-  "ok": true,
-  "messages_sent": 1,
-  "message_ids": [123]
-}
-```
+- TELEGRAM_BOT_TOKEN
+- TELEGRAM_CHAT_ID
+- BRIDGE_SECRET
+- MARKET_DATA_SECRET
 
----
+GitHub Actions secret:
 
-# 6. Request Contract
+- VERCEL_BRIDGE_SECRET
 
-### Endpoint
+No secret values belong in source control, request bodies, screenshots, or documentation.
 
-```text
-POST /api/telegram
-```
+## 4. Remove infrastructure when it stops adding value
 
-### Headers
+A Vercel market-data gateway was initially useful during architecture exploration.
 
-```text
-Content-Type: application/json
-x-bridge-secret: <BRIDGE_SECRET>
-```
+Once direct Binance access from the ChatGPT runtime was proven reliable, the gateway was removed from the critical production path.
 
-### Body
+The gateway remains available as an optional infrastructure component.
 
-```json
-{
-  "text": "Your Binance Square content pack here",
-  "disable_web_page_preview": true
-}
-```
+This follows an important production principle:
 
-`disable_web_page_preview` is optional and defaults to `true`.
+> Do not keep a service in the critical path simply because you already built it.
 
-Set it to `false` if you want Telegram to generate previews for links.
+## 5. Keep reasoning and delivery loosely coupled
+
+The analysis layer does not need to know how Telegram works.
+
+The Telegram bridge does not need to know how the analysis was produced.
+
+The integration contract is intentionally small:
+
+    {
+      "text": "..."
+    }
+
+This makes each component replaceable.
 
 ---
 
-# 7. Message Handling
+# The GitHub Outbox Pattern
 
-Telegram has a maximum message length for normal text messages.
+The repository uses a version-controlled outbox:
 
-The bridge therefore splits long content automatically.
+    AI-generated content
+            |
+            v
+    outbox/latest.json
+            |
+            v
+        Git commit
+            |
+            v
+    GitHub push event
+            |
+            v
+    GitHub Actions
+            |
+            v
+    External delivery
 
-The splitting strategy is:
+This provides:
 
-1. Try to split at a blank line.
-2. If necessary, split at a normal newline.
-3. If the message still cannot be split cleanly, use the hard character limit.
+### Auditability
 
-This is important for the Binance Square workflow because a complete daily analysis may contain:
+Every generated payload can be associated with a Git commit.
 
-- Market overview
-- BTC analysis
-- ETH analysis
-- BNB analysis
-- HTF bias
-- 4H structure
-- 1H structure
-- 15M confirmation
-- Invalidations
-- Key levels
-- Ready-to-post content
+### Reproducibility
 
----
+The exact payload that triggered delivery is preserved in repository history.
 
-# 8. Why the Bridge Uses HTML Instead of MarkdownV2
+### Loose coupling
 
-The incoming content may be written in Markdown.
+The AI generation layer does not need to know how Telegram works.
 
-Telegram has its own MarkdownV2 syntax, which has many characters that require escaping.
+### Failure visibility
 
-Trying to automatically convert arbitrary Markdown into Telegram MarkdownV2 can create fragile messages.
+A failed delivery becomes a visible GitHub Actions failure rather than a silent background error.
 
-This bridge therefore takes the safer approach:
+### Extensibility
 
-```text
-Incoming content
-       ↓
-Escape HTML-sensitive characters
-       ↓
-Send as Telegram HTML text
-```
-
-The content remains readable and safe.
-
-If rich Telegram formatting is desired later, a dedicated Markdown → Telegram HTML converter can be added.
+The same outbox can later feed Telegram, Slack, email, a dashboard, or an analytics pipeline.
 
 ---
 
-# 9. Security Model
+# Telegram Bridge
 
-The bridge uses two separate secrets/configuration values:
+## Endpoint
 
-### Telegram Bot Token
+    POST /api/telegram
 
-```text
-TELEGRAM_BOT_TOKEN
-```
+Production endpoint:
 
-This authenticates the bridge to Telegram.
+    https://binance-square-analyst.vercel.app/api/telegram
 
-### Bridge Secret
+## Authentication
 
-```text
-BRIDGE_SECRET
-```
+    Content-Type: application/json
+    x-bridge-secret: <BRIDGE_SECRET>
 
-This authenticates the caller to the bridge.
+## Request
 
-Therefore:
+    {
+      "text": "Your generated Binance Square content",
+      "disable_web_page_preview": true
+    }
 
-```text
-Caller
-  │
-  │ BRIDGE_SECRET
-  ▼
-Vercel Bridge
-  │
-  │ TELEGRAM_BOT_TOKEN
-  ▼
-Telegram
-```
+## Successful response
 
-The caller never receives or needs the Telegram BotFather token.
+    {
+      "ok": true,
+      "messages_sent": 1,
+      "message_ids": [123]
+    }
 
----
+## Error model
 
-# 10. Error Responses
-
-### 401 — Unauthorized
-
-The `x-bridge-secret` header is missing or incorrect.
-
-```json
-{
-  "ok": false,
-  "error": "Unauthorized"
-}
-```
-
-### 400 — Invalid Request
-
-The request does not contain a non-empty `text` field.
-
-```json
-{
-  "ok": false,
-  "error": "Request body must contain a non-empty \"text\" string."
-}
-```
-
-### 500 — Configuration Error
-
-One or more required Vercel environment variables are missing.
-
-```json
-{
-  "ok": false,
-  "error": "Telegram environment variables are not configured."
-}
-```
-
-### 502 — Telegram Error
-
-Telegram rejected the request or could not be reached.
-
-The bridge returns a sanitized error response and logs diagnostic details server-side.
+| Status | Meaning |
+|---|---|
+| 401 | Missing or invalid bridge secret |
+| 400 | Invalid or empty content payload |
+| 500 | Missing Telegram server configuration |
+| 502 | Telegram API or network failure |
 
 ---
 
-# 11. Local Development
+# Telegram Message Safety
 
-No npm dependencies are required by the bridge itself.
+Telegram has a maximum length for normal text messages.
 
-If you want to test it locally using Vercel's CLI:
+The bridge automatically splits long messages using this priority:
 
-```bash
-npm install -g vercel
-```
+1. paragraph boundary;
+2. newline boundary;
+3. hard character limit.
 
-Then:
+Messages are sent sequentially so multi-part content arrives in the correct order.
 
-```bash
-vercel dev
-```
-
-The endpoint will normally be available at:
-
-```text
-http://localhost:3000/api/telegram
-```
-
-Configure local environment variables using Vercel's environment-variable workflow rather than committing secrets to Git.
+Incoming content is HTML-escaped before being sent using Telegram HTML parse mode. This treats the incoming content as text and avoids fragile MarkdownV2 parsing.
 
 ---
 
-# 12. Connecting the Binance Square Workflow
+# GitHub Actions
 
-The intended production workflow is:
+The delivery workflow is intentionally small.
 
-```text
-09:00 Africa/Lagos
-        │
-        ▼
-Retrieve fresh Binance public market data
-        │
-        ▼
-BTC / ETH / BNB analysis
-        │
-        ▼
-SMC structure analysis
-        │
-        ├── Daily
-        ├── 4H
-        ├── 1H
-        └── 15M
-        │
-        ▼
-Generate Binance Square content
-        │
-        ▼
-POST content to this bridge
-        │
-        ▼
-Private Telegram delivery
-```
+    on:
+      push:
+        paths:
+          - "outbox/latest.json"
+      workflow_dispatch:
 
-The bridge deliberately does **not** contain the market-analysis logic. This separation keeps the system easier to maintain.
+The pipeline is:
 
----
+    outbox/latest.json changes
+              |
+       GitHub Actions
+              |
+       validate .text
+              |
+       read secret
+              |
+       POST to Vercel
+              |
+       Vercel validates
+              |
+       Telegram Bot API
 
-# 13. Example Content Payload
+The workflow requests only repository read permission:
 
-```json
-{
-  "text": "# BTC Daily Analysis\n\nBTC remains bullish while price holds above the higher-timeframe demand zone.\n\n## 4H Structure\n\nA clean liquidity sweep followed by displacement would strengthen the long thesis.\n\n## Confirmation\n\nWait for a 15M CHOCH/BOS before considering an entry.\n\n## Invalidation\n\nThe bullish thesis is invalid if price accepts below the marked 4H swing low.\n\n$BTC",
-  "disable_web_page_preview": true
-}
-```
+    permissions:
+      contents: read
 
-The bridge will deliver the content to Telegram.
+This keeps the delivery job narrowly scoped.
 
 ---
 
-# 14. Market Data API
+# Market Data Gateway
 
-In addition to the Telegram delivery bridge, this repository exposes a
-small, authenticated **Binance market-data gateway**. Its only job is to
-fetch public Binance Spot OHLCV candle data and return it as clean JSON.
+The repository also contains:
 
-```text
-ChatGPT
-  │
-  │ GET /api/market-data
-  │ x-market-data-secret
-  ▼
-Vercel Serverless Function
-api/market-data.js
-  │
-  │ public Spot klines (no API key)
-  ▼
-https://data-api.binance.vision/api/v3/klines
-  │
-  ▼
-Normalized OHLCV JSON
-  │
-  ▼
-ChatGPT performs SMC reasoning
-```
+    api/market-data.js
 
-**This endpoint does NOT perform technical analysis or make trading
-decisions.** It does not compute market structure, BOS/CHOCH, order
-blocks, fair value gaps, bias, or signals of any kind. It only retrieves
-and normalizes raw Binance candle data — all SMC reasoning stays with the
-calling workflow (ChatGPT).
-
-### Endpoint
-
-```text
-GET /api/market-data
-```
+This is an authenticated, read-only Binance Spot OHLCV gateway.
 
 ### Supported symbols
 
-- `BTCUSDT`
-- `ETHUSDT`
-- `BNBUSDT`
+- BTCUSDT
+- ETHUSDT
+- BNBUSDT
 
 ### Supported intervals
 
-- `1d`
-- `4h`
-- `1h`
-- `15m`
-- `5m`
+- 1d
+- 4h
+- 1h
+- 15m
+- 5m
 
 ### Query parameters
 
-| Parameter | Required | Default | Notes |
-|---|---|---|---|
-| `symbol` | No | `BTCUSDT` | Case-insensitive; must be one of the supported symbols |
-| `interval` | No | `4h` | Must be one of the supported intervals |
-| `limit` | No | `100` | Integer from 1–500 |
+| Parameter | Default | Description |
+|---|---|---|
+| symbol | BTCUSDT | Supported Spot symbol |
+| interval | 4h | Supported candle interval |
+| limit | 100 | 1-500 candles |
 
-### Authentication
+The gateway normalizes Binance kline responses into explicit OHLCV objects and reports whether the latest candle is still forming.
 
-```text
-x-market-data-secret: <MARKET_DATA_SECRET>
-```
+### Production status
 
-Missing or incorrect credentials return `401 Unauthorized`.
+This endpoint is **not required by the current validated live analysis path**.
 
-### Example request
+The current workflow obtains Binance market data directly through the connected Binance integration in the ChatGPT runtime.
 
-```bash
-curl -s \
-  "https://YOUR-VERCEL-DOMAIN.vercel.app/api/market-data?symbol=BTCUSDT&interval=4h&limit=100" \
-  -H "x-market-data-secret: YOUR_MARKET_DATA_SECRET"
-```
-
-### Example response
-
-```json
-{
-  "ok": true,
-  "source": "binance",
-  "symbol": "BTCUSDT",
-  "interval": "4h",
-  "limit": 100,
-  "candles": [
-    {
-      "openTime": 1791134400000,
-      "open": 84840.88,
-      "high": 85112.65,
-      "low": 84808.11,
-      "close": 85106,
-      "volume": 1234.56,
-      "closeTime": 1791148799999
-    }
-  ],
-  "candleStatus": {
-    "lastCandle": "possibly_incomplete"
-  },
-  "lastCandle": {
-    "openTime": 1791134400000,
-    "closeTime": 1791148799999,
-    "isClosed": false
-  }
-}
-```
-
-### Notes
-
-- Candle ordering matches Binance's chronological order exactly — nothing
-  is reordered, aggregated, or smoothed.
-- The most recent candle is never dropped. `lastCandle.isClosed` tells the
-  caller whether it may still be forming, based on comparing its
-  `closeTime` to the current server time.
-- No Binance API key is used or required — this uses Binance's public
-  Spot market-data host (`data-api.binance.vision`).
-- The upstream request has a bounded timeout so a slow/unresponsive
-  Binance API cannot hang the function.
+Keeping the gateway available nevertheless provides a reusable server-side market-data abstraction for future clients or services.
 
 ---
 
-# 15. What This Repository Does NOT Do
+# Example Production Analysis
 
-This project currently does not:
+A representative live BTC setup generated by the workflow included:
 
-- Execute trades
-- Store Binance API credentials
-- Store Telegram messages in a database
-- Perform SMC analysis
-- Scrape TradingView
-- Publish directly to Binance Square
-- Manage Binance user accounts
-- Place Binance orders
+    BTCUSDT — Daily + 4H + 1H + 15M
 
-It intentionally stays limited to two small, boring pieces:
+    Bias:
+    BULLISH
 
-1. A **secure Telegram delivery layer** (`api/telegram.js`).
-2. A **secure, read-only Binance public market-data gateway**
-   (`api/market-data.js`) that retrieves and normalizes OHLCV candles —
-   nothing more.
+    Primary setup:
+    LONG RETEST
 
-All SMC reasoning, structure analysis, and trading decisions remain
-outside this repository, in the calling workflow.
+    Long retest zone:
+    $85,100-$85,250
 
----
+    Buy-side liquidity:
+    $85,428-$85,470
 
-# 16. Future Extensions
+    Targets:
+    $85,470
+    $85,650
+    $86,000+
 
-Possible future versions can add:
+    Invalidation:
+    Sustained loss of ~$85,033
+    Stronger invalidation below ~$84,558
 
-### `/btc`
+The generated content also explicitly identified when price was extended into liquidity and advised against blindly chasing the move.
 
-Request the latest BTC analysis.
-
-### `/eth`
-
-Request ETH analysis.
-
-### `/bnb`
-
-Request BNB analysis.
-
-### `/posts`
-
-Return the latest generated Binance Square content.
-
-### `/refresh`
-
-Trigger a fresh analysis.
-
-### Message metadata
-
-The bridge could later attach:
-
-- Analysis timestamp
-- Asset
-- Timeframe
-- Confidence
-- Market regime
-- Setup status
-
-### Delivery routing
-
-Future versions could support multiple destinations:
-
-```text
-Telegram
-   ├── Personal chat
-   ├── Private channel
-   └── Team group
-```
+The goal is therefore to produce **conditional market plans**, not sensationalized "BUY NOW" calls.
 
 ---
 
-# 17. Operational Recommendation
+# What the Project Does
 
-For the first production version, keep this bridge deliberately boring.
+- Fetches fresh public Binance market data.
+- Performs multi-timeframe SMC analysis through the AI reasoning layer.
+- Generates Binance Square-ready commentary.
+- Produces structured analysis metadata.
+- Writes the generated payload to GitHub.
+- Uses Git history as an auditable outbox.
+- Automatically validates the outbox.
+- Delivers content through GitHub Actions.
+- Uses Vercel as a secure serverless delivery boundary.
+- Sends content to a private Telegram chat.
+- Handles Telegram message length limits.
+- Keeps credentials in secret stores.
+- Provides an optional reusable market-data gateway.
 
-The preferred architecture is:
+# What the Project Does NOT Do
 
-```text
-Analysis engine
-       ↓
-Authenticated HTTP request
-       ↓
-Vercel bridge
-       ↓
-Telegram
-```
+This project intentionally does not:
 
-Do not put market logic, trading credentials, or unnecessary infrastructure into this repository until the delivery path is proven reliable.
+- execute cryptocurrency trades;
+- place Binance orders;
+- manage Binance trading accounts;
+- store Binance trading API keys;
+- withdraw funds;
+- perform autonomous portfolio management;
+- scrape private Binance account data;
+- publish directly to Binance Square;
+- replace contextual SMC reasoning with a rigid indicator engine;
+- require a database;
+- require an always-on server.
 
-Once the Telegram delivery works consistently, the next engineering step should be connecting the 9 AM Binance Square Analyst workflow to this endpoint.
+---
+
+# Failure Handling
+
+Failures occur at explicit boundaries.
+
+### Market-data failure
+
+The analysis workflow should stop rather than fabricate market information.
+
+### Invalid outbox
+
+GitHub Actions fails validation if outbox/latest.json is missing or does not contain a non-empty text field.
+
+### Missing bridge secret
+
+The workflow fails before attempting delivery.
+
+### Unauthorized caller
+
+Vercel returns a 401 response.
+
+### Telegram failure
+
+Vercel returns a 502 response and GitHub Actions fails the delivery job.
+
+This creates an important operational property:
+
+> A failed delivery is visible as a failed workflow rather than being silently ignored.
+
+---
+
+# Testing Philosophy
+
+Testing follows the architecture.
+
+## Layer 1 — Function validation
+
+Validate request handling, market-data normalization, authentication and error conditions.
+
+## Layer 2 — Delivery validation
+
+Verify:
+
+    GitHub
+      -> GitHub Actions
+      -> Vercel
+      -> Telegram
+
+## Layer 3 — Production workflow validation
+
+Verify:
+
+    Live Binance data
+      -> AI SMC reasoning
+      -> production content
+      -> GitHub outbox
+      -> GitHub Actions
+      -> Vercel
+      -> Telegram
+
+The third layer is the strongest proof because it validates the complete system rather than isolated components.
+
+---
+
+# Engineering Lessons
+
+## 1. Start with the actual constraint
+
+The initial design assumed the scheduled environment could execute the complete workflow.
+
+Testing showed that scheduled and normal ChatGPT runtimes do not expose identical integrations.
+
+The architecture adapted:
+
+    Scheduled task
+         |
+       trigger
+         |
+    Normal runtime
+         |
+    Full workflow
+
+The result is simpler and more reliable than forcing every capability into one execution context.
+
+## 2. Prefer deterministic boundaries around AI
+
+AI systems are probabilistic.
+
+The surrounding infrastructure should be deterministic.
+
+    Probabilistic
+    -------------
+    Market interpretation
+    Content generation
+
+    Deterministic
+    -------------
+    JSON contract
+    Git commit
+    Workflow trigger
+    Secret validation
+    HTTP delivery
+    Telegram API
+
+This separation makes AI-powered systems easier to operate.
+
+## 3. Keep the critical path small
+
+The production path does not need a database, message queue, dedicated backend server, or custom market-data service.
+
+The current system is intentionally small:
+
+    ChatGPT
+      -> GitHub
+      -> GitHub Actions
+      -> Vercel
+      -> Telegram
+
+Minimal infrastructure means fewer failure points.
+
+## 4. Version control can also be an event mechanism
+
+GitHub is simultaneously:
+
+- source control;
+- audit log;
+- content outbox;
+- workflow trigger.
+
+That is a useful pattern for lightweight event-driven automation.
+
+---
+
+# Future Roadmap
+
+## Phase 2 — Multi-asset production runs
+
+Generate a single daily content pack covering:
+
+- BTCUSDT
+- ETHUSDT
+- BNBUSDT
+
+with independent SMC analysis for each asset.
+
+## Phase 3 — Content variants
+
+Generate:
+
+- short market updates;
+- full SMC analyses;
+- setup alerts;
+- educational posts;
+- weekly market recaps.
+
+## Phase 4 — Delivery adapters
+
+Add additional destinations:
+
+    AI Outbox
+       |
+       +-- Telegram
+       +-- Slack
+       +-- Email
+       +-- Web dashboard
+       +-- Content archive
+
+## Phase 5 — Observability
+
+Potential additions:
+
+- delivery IDs;
+- structured logs;
+- latency measurements;
+- failure dashboards;
+- content-generation history;
+- delivery retry policies.
+
+## Phase 6 — Binance Square publishing
+
+If direct publishing is introduced, it should remain a separate delivery adapter rather than being tightly coupled to the SMC reasoning layer.
+
+---
+
+# Portfolio Perspective
+
+This repository demonstrates more than a Telegram bot.
+
+It demonstrates the design and integration of an **AI-assisted production workflow across multiple systems**.
+
+### AI / Reasoning
+
+- multi-timeframe analysis;
+- contextual SMC reasoning;
+- structured decision generation;
+- human-in-the-loop orchestration.
+
+### Backend Engineering
+
+- serverless API design;
+- request validation;
+- authentication;
+- secret management;
+- external API integration;
+- failure handling.
+
+### DevOps
+
+- GitHub Actions;
+- event-driven automation;
+- CI/CD;
+- Vercel deployment;
+- environment secrets;
+- explicit operational boundaries.
+
+### Integration Architecture
+
+    Binance -> AI
+    AI -> GitHub
+    GitHub -> GitHub Actions
+    GitHub Actions -> Vercel
+    Vercel -> Telegram
+
+### Software Architecture
+
+- loose coupling;
+- deterministic interfaces;
+- outbox pattern;
+- separation of concerns;
+- minimal infrastructure;
+- graceful failure handling.
+
+The project is intentionally small enough to understand quickly while still demonstrating a complete path from **live data -> AI reasoning -> production delivery**.
+
+---
+
+# Quick Architecture Summary
+
+    +-----------------------+
+    | Scheduled Trigger     |
+    | 09:00                  |
+    +-----------+-----------+
+                |
+               RUN
+                |
+    +-----------v-----------+
+    | ChatGPT Orchestrator  |
+    +-----------+-----------+
+                |
+        +-------+-------+
+        |               |
+        v               v
+     Binance       SMC Reasoning
+     live data      Daily/4H/1H/15M
+        |               |
+        +-------+-------+
+                |
+                v
+    +-----------------------+
+    | Square Content        |
+    | + Analysis Metadata   |
+    +-----------+-----------+
+                |
+                v
+    +-----------------------+
+    | GitHub Outbox         |
+    | outbox/latest.json    |
+    +-----------+-----------+
+                |
+              push
+                |
+                v
+    +-----------------------+
+    | GitHub Actions        |
+    +-----------+-----------+
+                |
+              HTTPS
+                |
+                v
+    +-----------------------+
+    | Vercel Telegram Bridge|
+    +-----------+-----------+
+                |
+             Bot API
+                |
+                v
+    +-----------------------+
+    | Private Telegram      |
+    +-----------------------+
+
+---
+
+# Status
+
+**Current status: Production-proven prototype.**
+
+The core workflow has been successfully exercised with live Binance data and real Telegram delivery.
+
+The system is ready to evolve from a validated experiment into a more complete automated Binance Square content platform.
+
+---
+
+## Disclaimer
+
+This project is an engineering and market-analysis experiment.
+
+Generated market commentary is educational and is **not financial advice**.
+
+No part of this repository executes trades or manages funds.
 
 ---
 
 ## License
 
-Private/personal project. Add an explicit license if this repository will later be made open source.
+Private/personal project.
+
+If this repository is later released as open source, add an explicit license appropriate to the intended use.
