@@ -1,17 +1,25 @@
 {
-  "text": "🧠 BTCUSDT SMC SETUP — LIVE\n\nBTC remains structurally bullish, but price is pressing into buy-side liquidity. The setup is to wait for confirmation — not chase.\n\nHTF READ\n• Daily structure is recovering from the ~$83.9K sell-side sweep and has reclaimed ~$85K.\n• 4H has expanded from the ~$84.5K–$84.7K demand area and is trading above the $85K reclaim.\n• Key overhead liquidity sits around $85,428–$85,470.\n\n1H / 15M\n• 1H structure remains bullish with higher highs/higher lows.\n• 15M momentum is still positive, but price is extended near the current highs.\n• BTC spot is around $85,376 on the latest Binance price tick.\n\n🎯 PRIMARY LONG\nWait for a retrace into ~$85,100–$85,250, then require bullish 15M displacement/reclaim before entry.\n\nTargets:\n→ $85,470\n→ $85,650\n→ $86,000+\n\nInvalidation: sustained loss of ~$85,033, with stronger bearish invalidation below ~$84,558.\n\n🚀 BREAKOUT ALTERNATIVE\nIf BTC cleanly accepts above $85,470 on 1H/4H structure, continuation toward $85,650 and $86K becomes the cleaner momentum scenario.\n\n🔴 SHORT ONLY IF CONFIRMED\nA sweep through $85,428–$85,470 followed by bearish 15M displacement and loss of ~$85,250 would open a short setup toward $85,033 → $84,890 → $84,558.\n\n⚠️ SMC verdict: BULLISH, but currently extended into liquidity. Patience beats chasing.\n\n$BTC #BTC #Bitcoin #SMC #PriceAction #BinanceSquare\n\nEducational market analysis — not financial advice.",
-  "asset": "BTCUSDT",
+  "text": "🧠 HYPEUSDT + XAUUSD SMC SETUPS — LIVE\n\nHYPEUSDT\nCurrent: ~$91.00\n\nHTF READ\n• Daily structure has recovered from the ~$84.64–$86.16 sell-side area and reclaimed $90.\n• 4H is printing higher highs/higher lows from the ~$87.5–$88.0 base.\n• 1H/15M remain bullish, but price is pressing the $91.00 liquidity/high.\n\n🎯 PRIMARY LONG\nWait for a retrace into ~$90.45–$90.70, then require bullish 15M displacement/reclaim.\n\nTargets:\n→ $91.50\n→ $92.50\n→ $94.00–$94.50\n\nInvalidation: sustained loss of ~$89.80. Stronger structural invalidation below ~$87.50.\n\n🚀 BREAKOUT ALTERNATIVE\nClean 1H acceptance above $91.00 opens $91.50 → $92.50.\n\n⚠️ HYPE verdict: BULLISH, but do not chase the current high. Retest is cleaner.\n\nXAUUSD\nCurrent spot: ~$4,140–$4,142. Gold is closed/illiquid for the weekend; this is a next-session map.\n\nHTF READ\n• Daily/4H structure remains bearish after rejection from ~$4,197–$4,225.\n• Friday's move swept highs and displaced sharply lower toward ~$4,126.\n• Price is now sitting near the lower end of the range, so chasing shorts here is poor R:R.\n• Key bearish FVG/resistance sits around ~$4,158–$4,177.\n\n🎯 PRIMARY SHORT\nWait for a retrace into ~$4,158–$4,177, then require bearish 15M displacement/rejection.\n\nTargets:\n→ $4,126\n→ $4,115\n→ $4,100\n\nInvalidation: sustained acceptance above ~$4,197; stronger invalidation above ~$4,225.\n\n🔴 BREAKDOWN ALTERNATIVE\nIf $4,126 breaks with bearish 15M displacement, continuation toward $4,115 → $4,100 becomes the cleaner momentum scenario.\n\n⚠️ XAUUSD verdict: BEARISH, but currently extended at support. Prefer selling the retracement.\n\n$HYPE #HYPE #Hyperliquid #XAUUSD #Gold #SMC #PriceAction #BinanceSquare\n\nEducational market analysis — not financial advice.",
+  "assets": ["HYPEUSDT","XAUUSD"],
   "timeframe": "Daily+4H+1H+15M",
-  "timestamp": "2026-10-04T19:21:00Z",
-  "source": "ChatGPT + Binance public spot OHLCV",
+  "timestamp": "2026-10-04T22:04:38Z",
+  "source": "ChatGPT + Binance public spot OHLCV + current XAU/USD spot market data",
   "test": false,
   "live_binance_data": true,
   "analysis": {
-    "bias": "bullish",
-    "primary_setup": "long_retest",
-    "long_retest_zone": "85100-85250",
-    "buy_side_liquidity": "85428-85470",
-    "targets": ["85470","85650","86000+"],
-    "invalidation": "sustained loss of 85033; stronger invalidation below 84558"
+    "HYPEUSDT": {
+      "bias": "bullish",
+      "primary_setup": "long_retest",
+      "long_retest_zone": "90.45-90.70",
+      "targets": ["91.50","92.50","94.00-94.50"],
+      "invalidation": "sustained loss of 89.80; stronger invalidation below 87.50"
+    },
+    "XAUUSD": {
+      "bias": "bearish",
+      "primary_setup": "short_retest",
+      "short_retest_zone": "4158-4177",
+      "targets": ["4126","4115","4100"],
+      "invalidation": "sustained acceptance above 4197; stronger invalidation above 4225"
+    }
   }
 }
