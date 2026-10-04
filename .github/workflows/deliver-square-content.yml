@@ -1,0 +1,61 @@
+name: Deliver Square Content to Telegram
+
+on:
+  push:
+    paths:
+      - "outbox/latest.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deliver:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate outbox payload
+        id: payload
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test -f outbox/latest.json
+
+          text="$(jq -r '.text // empty' outbox/latest.json)"
+          if [ -z "$text" ]; then
+            echo "outbox/latest.json is missing a non-empty .text field" >&2
+            exit 1
+          fi
+
+          echo "Payload validated."
+          echo "text<<EOF" >> "$GITHUB_OUTPUT"
+          printf '%s\n' "$text" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Deliver to Vercel Telegram bridge
+        env:
+          BRIDGE_URL: https://binance-square-analyst.vercel.app/api/telegram
+          BRIDGE_SECRET: ${{ secrets.VERCEL_BRIDGE_SECRET }}
+          TEXT: ${{ steps.payload.outputs.text }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ -z "$BRIDGE_SECRET" ]; then
+            echo "Missing GitHub Actions secret: VERCEL_BRIDGE_SECRET" >&2
+            exit 1
+          fi
+
+          payload="$(jq -n --arg text "$TEXT" '{text: $text, disable_web_page_preview: true}')"
+
+          curl --fail-with-body --silent --show-error \
+            --request POST \
+            --header "Content-Type: application/json" \
+            --header "x-bridge-secret: $BRIDGE_SECRET" \
+            --data "$payload" \
+            "$BRIDGE_URL"
+
+          echo "Delivered Square content to Telegram."
