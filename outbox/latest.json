@@ -1,25 +1,19 @@
 {
-  "text": "🧠 HYPEUSDT + XAUUSD SMC SETUPS — LIVE\n\nHYPEUSDT\nCurrent: ~$91.00\n\nHTF READ\n• Daily structure has recovered from the ~$84.64–$86.16 sell-side area and reclaimed $90.\n• 4H is printing higher highs/higher lows from the ~$87.5–$88.0 base.\n• 1H/15M remain bullish, but price is pressing the $91.00 liquidity/high.\n\n🎯 PRIMARY LONG\nWait for a retrace into ~$90.45–$90.70, then require bullish 15M displacement/reclaim.\n\nTargets:\n→ $91.50\n→ $92.50\n→ $94.00–$94.50\n\nInvalidation: sustained loss of ~$89.80. Stronger structural invalidation below ~$87.50.\n\n🚀 BREAKOUT ALTERNATIVE\nClean 1H acceptance above $91.00 opens $91.50 → $92.50.\n\n⚠️ HYPE verdict: BULLISH, but do not chase the current high. Retest is cleaner.\n\nXAUUSD\nCurrent spot: ~$4,140–$4,142. Gold is closed/illiquid for the weekend; this is a next-session map.\n\nHTF READ\n• Daily/4H structure remains bearish after rejection from ~$4,197–$4,225.\n• Friday's move swept highs and displaced sharply lower toward ~$4,126.\n• Price is now sitting near the lower end of the range, so chasing shorts here is poor R:R.\n• Key bearish FVG/resistance sits around ~$4,158–$4,177.\n\n🎯 PRIMARY SHORT\nWait for a retrace into ~$4,158–$4,177, then require bearish 15M displacement/rejection.\n\nTargets:\n→ $4,126\n→ $4,115\n→ $4,100\n\nInvalidation: sustained acceptance above ~$4,197; stronger invalidation above ~$4,225.\n\n🔴 BREAKDOWN ALTERNATIVE\nIf $4,126 breaks with bearish 15M displacement, continuation toward $4,115 → $4,100 becomes the cleaner momentum scenario.\n\n⚠️ XAUUSD verdict: BEARISH, but currently extended at support. Prefer selling the retracement.\n\n$HYPE #HYPE #Hyperliquid #XAUUSD #Gold #SMC #PriceAction #BinanceSquare\n\nEducational market analysis — not financial advice.",
-  "assets": ["HYPEUSDT","XAUUSD"],
-  "timeframe": "Daily+4H+1H+15M",
-  "timestamp": "2026-10-04T22:04:38Z",
-  "source": "ChatGPT + Binance public spot OHLCV + current XAU/USD spot market data",
-  "test": false,
-  "live_binance_data": true,
-  "analysis": {
-    "HYPEUSDT": {
-      "bias": "bullish",
-      "primary_setup": "long_retest",
-      "long_retest_zone": "90.45-90.70",
-      "targets": ["91.50","92.50","94.00-94.50"],
-      "invalidation": "sustained loss of 89.80; stronger invalidation below 87.50"
-    },
-    "XAUUSD": {
-      "bias": "bearish",
-      "primary_setup": "short_retest",
-      "short_retest_zone": "4158-4177",
-      "targets": ["4126","4115","4100"],
-      "invalidation": "sustained acceptance above 4197; stronger invalidation above 4225"
-    }
+  "text":"🧠 FOREX MAJORS SMC MAP — LIVE\n\nMarket data is from Twelve Data. FX is in the Monday session, so levels should be confirmed against your broker's MT5 feed before execution.\n\n🔥 STRONGEST SETUP — USDJPY BUY\nCurrent: ~157.81\n\nHTF READ\n• Daily structure remains bullish: USDJPY has advanced from the ~152.9–154.0 area into the 157–158 region.\n• Recent liquidity was swept around 156.39, followed by recovery back above 157.50.\n• 4H is bullish overall, but price is pressing the 157.95–158.12 buy-side liquidity zone.\n\n🎯 PRIMARY LONG\nWait for a retrace into 157.40–157.65, then require bullish 15M displacement/reclaim on your broker feed.\n\nTargets:\n→ 158.20\n→ 158.45\n→ 159.00\n\nInvalidation: sustained loss of 156.95. Stronger structural invalidation below 156.39.\n\n🚀 BREAKOUT ALTERNATIVE\nClean 1H acceptance above 158.12 opens 158.45 → 159.00.\n\nEURUSD — BEARISH / RETRACEMENT SHORT\nCurrent: ~1.1259\n• Daily structure remains bearish after the extended decline from the 1.16 area.\n• Price is currently near 1.125–1.126 support, so chasing shorts is poor R:R.\n• Preferred short zone: 1.1280–1.1300, with bearish 15M confirmation.\n• Targets: 1.1240 → 1.1220 → 1.1180.\n• Invalidation: sustained acceptance above 1.1330.\n\nGBPUSD — BEARISH / RETRACEMENT SHORT\nCurrent: ~1.3248\n• Daily structure remains bearish from the 1.35+ area, despite the recent bounce.\n• Preferred short zone: 1.3270–1.3300 with bearish confirmation.\n• Targets: 1.3230 → 1.3190 → 1.3150.\n• Invalidation: sustained acceptance above 1.3330.\n\nAUDUSD — BEARISH / RETRACEMENT SHORT\nCurrent: ~0.6956\n• Daily structure remains bearish after the rejection from ~0.724.\n• Preferred short zone: 0.6970–0.6990.\n• Targets: 0.6930 → 0.6910 → 0.6870.\n• Invalidation: sustained acceptance above 0.7010.\n\nUSDCHF — BULLISH / RETEST LONG\nCurrent: ~0.8287\n• Broader structure is recovering from the ~0.7607 low, but price is close to the 52-week high zone.\n• Preferred long zone: 0.8250–0.8270 after bullish confirmation.\n• Targets: 0.8300 → 0.8330 → 0.8380.\n• Invalidation: sustained loss of 0.8220.\n\nUSDCAD — BULLISH BUT EXTENDED\nCurrent: ~1.4251\n• Price is sitting just under the 52-week high around 1.4264.\n• Do not chase. Prefer a pullback toward 1.4200–1.4220 with bullish confirmation.\n• Targets: 1.4260 → 1.4300.\n• Invalidation: sustained loss of 1.4170.\n\nNZDUSD — BEARISH BUT EXTENDED\nCurrent: ~0.5621\n• Price is close to the 52-week low area around 0.5583.\n• Prefer a retracement short around 0.5640–0.5660 rather than selling into support.\n• Targets: 0.5600 → 0.5585 → 0.5550.\n• Invalidation: sustained acceptance above 0.5680.\n\n⚠️ SMC VERDICT\nUSDJPY BUY is the cleanest major-pair setup right now. EURUSD, GBPUSD and AUDUSD favour bearish retracement setups; USDCHF favours a cautious long retest. USDCAD and NZDUSD are too close to major liquidity/support to chase.\n\n#Forex #USDJPY #EURUSD #GBPUSD #AUDUSD #USDCHF #USDCAD #NZDUSD #SMC #PriceAction #BinanceSquare\n\nEducational market analysis — not financial advice.",
+  "assets":["EURUSD","GBPUSD","USDJPY","USDCHF","AUDUSD","USDCAD","NZDUSD"],
+  "timeframe":"Daily+4H+1H+15M",
+  "timestamp":"2026-10-04T22:44:34Z",
+  "source":"ChatGPT + Twelve Data Forex OHLCV/quotes",
+  "test":false,
+  "live_binance_data":false,
+  "live_forex_data":true,
+  "analysis":{
+    "strongest_setup":{"asset":"USDJPY","bias":"bullish","primary_setup":"long_retest","retest_zone":"157.40-157.65","targets":["158.20","158.45","159.00"],"invalidation":"sustained loss of 156.95; stronger below 156.39"},
+    "EURUSD":{"bias":"bearish","setup":"short_retest","zone":"1.1280-1.1300"},
+    "GBPUSD":{"bias":"bearish","setup":"short_retest","zone":"1.3270-1.3300"},
+    "AUDUSD":{"bias":"bearish","setup":"short_retest","zone":"0.6970-0.6990"},
+    "USDCHF":{"bias":"bullish","setup":"long_retest","zone":"0.8250-0.8270"},
+    "USDCAD":{"bias":"bullish","setup":"long_retest","zone":"1.4200-1.4220"},
+    "NZDUSD":{"bias":"bearish","setup":"short_retest","zone":"0.5640-0.5660"}
   }
 }
