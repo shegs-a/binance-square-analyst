@@ -1,43 +1,43 @@
 {
-  "text": "🧠 NY SESSION SMC FOREX MAP — EURUSD + GBPUSD\n\nFresh market data | Daily → 4H → 1H → 15M\nSession: New York\nNo setup is an entry until 15M confirmation occurs.\n\n🔥 STRONGEST SETUP — GBPUSD BUY\nCurrent: ~$1.3226\n\nHTF READ\n• Daily has been recovering from the ~1.319 area after a broader pullback.\n• 4H structure has shifted into a bullish recovery, with price holding above the 1.3215 area.\n• 1H liquidity sits above around 1.3231 and 1.3240.\n• Recent 15M price action swept the ~1.3216 area and displaced higher toward 1.3231.\n\n🎯 PRIMARY LONG\nWait for a pullback into 1.3220–1.3224, then require bullish 15M displacement/reclaim.\n\nTargets:\n→ 1.3231\n→ 1.3240\n→ 1.3250\n\nInvalidation: sustained loss of ~1.3214.\n\nR:R to the main 1H liquidity target is approximately 1:3 if the entry is taken near the middle of the zone.\n\n🟠 EURUSD SELL — CONDITIONAL\nCurrent: ~$1.1204\n\nHTF READ\n• Daily and 4H structure remain bearish despite the current corrective rebound.\n• The euro remains under pressure from ongoing European fiscal/political concerns, while the dollar remains broadly firm.\n• 1H buy-side liquidity is concentrated around 1.1216–1.1222.\n• The preferred trade is NOT to chase the current price lower.\n\n🎯 PRIMARY SHORT\nWait for a retracement into 1.1214–1.1219, then require bearish 15M displacement/reclaim.\n\nTargets:\n→ 1.1196\n→ 1.1187\n→ 1.1162\n\nInvalidation: sustained acceptance above ~1.1225.\n\n⚠️ SESSION VERDICT\nGBPUSD is the cleaner technical setup because its nearest meaningful 1H liquidity target offers better R:R.\nEURUSD has the stronger macro bearish backdrop, but requires the retracement + 15M confirmation before becoming actionable.\n\nNo USDJPY/GBPJPY setup is being forced into this run because the Twelve Data feed hit its per-minute API credit limit while expanding the scan. I will not substitute stale or guessed data.\n\nEducational market analysis — not financial advice.\n\n#GBPUSD #EURUSD #Forex #SMC #PriceAction #NewYorkSession",
+  "text": "🧠 ASIA SESSION SMC FOREX MAP — USDJPY + AUDJPY\n\nFresh market data | Daily → 4H → 1H → 15M\nSession: Tokyo / Asia\nNo setup is an entry until 15M confirmation occurs.\n\n🔥 STRONGEST ASIA SETUP — USDJPY BUY\nCurrent: ~157.90\n\nHTF READ\n• Daily structure remains bullish after the sustained advance through 157.00 and 158.00.\n• 4H structure is bullish, but price has just rejected the 158.30 liquidity area.\n• 1H is pulling back into the 157.80–157.95 retest zone.\n• 15M has started stabilising around 157.90 after the pullback.\n\n🎯 PRIMARY LONG\nWait for a controlled retest into 157.80–157.95, then require bullish 15M displacement/reclaim.\n\nTargets:\n→ 158.16\n→ 158.30\n→ 158.45\n\nInvalidation: sustained loss of ~157.57.\n\n⚠️ BOJ EVENT RISK\nBank of Japan Governor Ueda is scheduled to speak during the Tokyo session. Avoid blind entries immediately before the event; confirmation after the volatility spike is preferable. citeturn0search2\n\n🟢 AUDJPY BUY — SECONDARY\nCurrent: ~110.09\n\nHTF READ\n• Daily structure has recovered strongly from the ~109.40 area.\n• 4H remains bullish with price holding above 110.00.\n• 1H shows a clean recovery from ~109.91 into the 110.18 liquidity area.\n• 15M is consolidating above 110.00.\n\n🎯 PRIMARY LONG\nWait for 110.02–110.06, then require bullish 15M displacement/reclaim.\n\nTargets:\n→ 110.18\n→ 110.70\n→ 111.00\n\nInvalidation: sustained loss of ~109.91.\n\n⚠️ ASIA VERDICT\nUSDJPY is the cleaner setup because the 4H trend is stronger and the 157.80–157.95 retracement gives a defined invalidation.\n\nAUDJPY is also bullish, but the first target at 110.18 is relatively close, so patience for a deeper retest is important.\n\nChina remains closed for the holiday, so Asia liquidity is likely to be thinner than normal. citeturn0search2\n\nEducational market analysis — not financial advice.\n\n#USDJPY #AUDJPY #Forex #SMC #PriceAction #AsianSession",
   "assets": [
-    "GBPUSD",
-    "EURUSD"
+    "USDJPY",
+    "AUDJPY"
   ],
   "timeframe": "Daily+4H+1H+15M",
-  "timestamp": "2026-10-05T22:45:00Z",
-  "source": "ChatGPT + Twelve Data OHLCV + current market news",
+  "timestamp": "2026-10-05T22:48:00Z",
+  "source": "ChatGPT + Twelve Data OHLCV + current Asia-session context",
   "test": false,
   "live_forex_data": true,
-  "session": "New York",
+  "session": "Asia",
   "analysis": {
-    "GBPUSD": {
-      "bias": "bullish_recovery",
+    "USDJPY": {
+      "bias": "bullish",
       "setup": "long_retest",
-      "zone": "1.3220-1.3224",
+      "zone": "157.80-157.95",
       "confirmation": "15M bullish displacement/reclaim",
       "targets": [
-        "1.3231",
-        "1.3240",
-        "1.3250"
+        "158.16",
+        "158.30",
+        "158.45"
       ],
-      "invalidation": "1.3214",
-      "liquidity": "1.3231-1.3240",
-      "poi": "1.3220-1.3224"
+      "invalidation": "157.57",
+      "liquidity": "158.16-158.30",
+      "poi": "157.80-157.95"
     },
-    "EURUSD": {
-      "bias": "bearish",
-      "setup": "short_retest",
-      "zone": "1.1214-1.1219",
-      "confirmation": "15M bearish displacement/reclaim",
+    "AUDJPY": {
+      "bias": "bullish_recovery",
+      "setup": "long_retest",
+      "zone": "110.02-110.06",
+      "confirmation": "15M bullish displacement/reclaim",
       "targets": [
-        "1.1196",
-        "1.1187",
-        "1.1162"
+        "110.18",
+        "110.70",
+        "111.00"
       ],
-      "invalidation": "1.1225",
-      "liquidity": "1.1216-1.1222",
-      "poi": "1.1214-1.1219"
+      "invalidation": "109.91",
+      "liquidity": "110.18-110.70",
+      "poi": "110.02-110.06"
     }
   }
 }
