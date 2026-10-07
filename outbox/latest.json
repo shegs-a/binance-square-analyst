@@ -1,43 +1,34 @@
 {
-  "text": "🧠 ASIA SESSION SMC FOREX MAP — USDJPY + AUDJPY\n\nFresh market data | Daily → 4H → 1H → 15M\nSession: Tokyo / Asia\nNo setup is an entry until 15M confirmation occurs.\n\n🔥 STRONGEST ASIA SETUP — USDJPY BUY\nCurrent: ~157.90\n\nHTF READ\n• Daily structure remains bullish after the sustained advance through 157.00 and 158.00.\n• 4H structure is bullish, but price has just rejected the 158.30 liquidity area.\n• 1H is pulling back into the 157.80–157.95 retest zone.\n• 15M has started stabilising around 157.90 after the pullback.\n\n🎯 PRIMARY LONG\nWait for a controlled retest into 157.80–157.95, then require bullish 15M displacement/reclaim.\n\nTargets:\n→ 158.16\n→ 158.30\n→ 158.45\n\nInvalidation: sustained loss of ~157.57.\n\n⚠️ BOJ EVENT RISK\nBank of Japan Governor Ueda is scheduled to speak during the Tokyo session. Avoid blind entries immediately before the event; confirmation after the volatility spike is preferable. citeturn0search2\n\n🟢 AUDJPY BUY — SECONDARY\nCurrent: ~110.09\n\nHTF READ\n• Daily structure has recovered strongly from the ~109.40 area.\n• 4H remains bullish with price holding above 110.00.\n• 1H shows a clean recovery from ~109.91 into the 110.18 liquidity area.\n• 15M is consolidating above 110.00.\n\n🎯 PRIMARY LONG\nWait for 110.02–110.06, then require bullish 15M displacement/reclaim.\n\nTargets:\n→ 110.18\n→ 110.70\n→ 111.00\n\nInvalidation: sustained loss of ~109.91.\n\n⚠️ ASIA VERDICT\nUSDJPY is the cleaner setup because the 4H trend is stronger and the 157.80–157.95 retracement gives a defined invalidation.\n\nAUDJPY is also bullish, but the first target at 110.18 is relatively close, so patience for a deeper retest is important.\n\nChina remains closed for the holiday, so Asia liquidity is likely to be thinner than normal. citeturn0search2\n\nEducational market analysis — not financial advice.\n\n#USDJPY #AUDJPY #Forex #SMC #PriceAction #AsianSession",
-  "assets": [
-    "USDJPY",
-    "AUDJPY"
-  ],
+  "text": "🧠 DAILY SMC MARKET MAP — EURUSD + GOLD\n\nFresh market data | Daily → 4H → 1H → 15M\nNo setup is an entry until 15M confirmation occurs.\n\n🔥 STRONGEST SETUP — XAUUSD SELL\nCurrent: ~$4,135\n\nHTF READ\n• Daily structure remains bearish after the rejection from the ~$4,184 area and the broader decline from the September highs.\n• 4H structure is bearish; price rejected ~$4,184 and is now pressing back toward the ~$4,133–$4,108 liquidity area.\n• 1H structure is making lower highs/lower lows.\n• Current price is already near the downside objective, so chasing the move is poor R:R.\n\n🎯 PRIMARY SHORT\nWait for a retracement into $4,145–$4,160, then require bearish 15M displacement/reclaim.\n\nTargets:\n→ $4,133\n→ $4,115\n→ $4,108\n\nInvalidation: sustained acceptance above ~$4,169.\nStronger structural invalidation above ~$4,184.\n\n🟠 EURUSD SELL — CONDITIONAL\nCurrent: ~$1.1234\n\nHTF READ\n• Daily structure remains bearish following the broader rejection from the 1.1375 area.\n• 4H rallied into ~1.1279 and then rejected sharply.\n• 1H/15M are now rolling over after the corrective recovery.\n• The current price is already below the preferred short zone, so wait for the retracement rather than chase.\n\n🎯 PRIMARY SHORT\nWait for a retracement into 1.1245–1.1252, then require bearish 15M displacement/reclaim.\n\nTargets:\n→ 1.12285\n→ 1.12023\n→ 1.11870\n\nInvalidation: sustained acceptance above ~1.1266.\nStronger structural invalidation above ~1.1279.\n\n⚠️ MACRO RISK\nMarkets are focused on the Federal Reserve's September meeting minutes today. Gold is particularly sensitive to changes in Treasury yields, the dollar and expectations for further rate hikes. Reuters reports spot gold around $4,150 earlier today with a mild downside bias, while EUR/USD has stabilised somewhat above $1.1250 after the French bond-market stress eased.\n\n⚠️ SMC VERDICT\nXAUUSD SELL is the cleaner setup, but only on a retracement into 4,145–4,160.\nEURUSD SELL is also valid conditionally, with 1.1245–1.1252 as the preferred POI.\nDo not chase either move at current levels.\n\nEducational market analysis — not financial advice.\n\n#XAUUSD #Gold #EURUSD #Forex #SMC #PriceAction",
+  "assets": ["EURUSD","XAUUSD"],
   "timeframe": "Daily+4H+1H+15M",
-  "timestamp": "2026-10-05T22:48:00Z",
-  "source": "ChatGPT + Twelve Data OHLCV + current Asia-session context",
+  "timestamp": "2026-10-07T05:15:00Z",
+  "source": "ChatGPT + Twelve Data OHLCV + current market context",
   "test": false,
   "live_forex_data": true,
-  "session": "Asia",
+  "session": "Global",
   "analysis": {
-    "USDJPY": {
-      "bias": "bullish",
-      "setup": "long_retest",
-      "zone": "157.80-157.95",
-      "confirmation": "15M bullish displacement/reclaim",
-      "targets": [
-        "158.16",
-        "158.30",
-        "158.45"
-      ],
-      "invalidation": "157.57",
-      "liquidity": "158.16-158.30",
-      "poi": "157.80-157.95"
+    "EURUSD": {
+      "bias": "bearish",
+      "setup": "short_retest",
+      "zone": "1.1245-1.1252",
+      "confirmation": "15M bearish displacement/reclaim",
+      "targets": ["1.12285","1.12023","1.11870"],
+      "invalidation": "1.12660",
+      "stronger_invalidation": "1.12786",
+      "liquidity": "1.12285-1.12023",
+      "poi": "1.1245-1.1252"
     },
-    "AUDJPY": {
-      "bias": "bullish_recovery",
-      "setup": "long_retest",
-      "zone": "110.02-110.06",
-      "confirmation": "15M bullish displacement/reclaim",
-      "targets": [
-        "110.18",
-        "110.70",
-        "111.00"
-      ],
-      "invalidation": "109.91",
-      "liquidity": "110.18-110.70",
-      "poi": "110.02-110.06"
+    "XAUUSD": {
+      "bias": "bearish",
+      "setup": "short_retest",
+      "zone": "4145-4160",
+      "confirmation": "15M bearish displacement/reclaim",
+      "targets": ["4133","4115","4108"],
+      "invalidation": "4169",
+      "stronger_invalidation": "4184",
+      "liquidity": "4133-4108",
+      "poi": "4145-4160"
     }
   }
 }
