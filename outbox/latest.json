@@ -1,34 +1,45 @@
 {
-  "text": "🧠 DAILY SMC MARKET MAP — EURUSD + GOLD\n\nFresh market data | Daily → 4H → 1H → 15M\nNo setup is an entry until 15M confirmation occurs.\n\n🔥 STRONGEST SETUP — XAUUSD SELL\nCurrent: ~$4,135\n\nHTF READ\n• Daily structure remains bearish after the rejection from the ~$4,184 area and the broader decline from the September highs.\n• 4H structure is bearish; price rejected ~$4,184 and is now pressing back toward the ~$4,133–$4,108 liquidity area.\n• 1H structure is making lower highs/lower lows.\n• Current price is already near the downside objective, so chasing the move is poor R:R.\n\n🎯 PRIMARY SHORT\nWait for a retracement into $4,145–$4,160, then require bearish 15M displacement/reclaim.\n\nTargets:\n→ $4,133\n→ $4,115\n→ $4,108\n\nInvalidation: sustained acceptance above ~$4,169.\nStronger structural invalidation above ~$4,184.\n\n🟠 EURUSD SELL — CONDITIONAL\nCurrent: ~$1.1234\n\nHTF READ\n• Daily structure remains bearish following the broader rejection from the 1.1375 area.\n• 4H rallied into ~1.1279 and then rejected sharply.\n• 1H/15M are now rolling over after the corrective recovery.\n• The current price is already below the preferred short zone, so wait for the retracement rather than chase.\n\n🎯 PRIMARY SHORT\nWait for a retracement into 1.1245–1.1252, then require bearish 15M displacement/reclaim.\n\nTargets:\n→ 1.12285\n→ 1.12023\n→ 1.11870\n\nInvalidation: sustained acceptance above ~1.1266.\nStronger structural invalidation above ~1.1279.\n\n⚠️ MACRO RISK\nMarkets are focused on the Federal Reserve's September meeting minutes today. Gold is particularly sensitive to changes in Treasury yields, the dollar and expectations for further rate hikes. Reuters reports spot gold around $4,150 earlier today with a mild downside bias, while EUR/USD has stabilised somewhat above $1.1250 after the French bond-market stress eased.\n\n⚠️ SMC VERDICT\nXAUUSD SELL is the cleaner setup, but only on a retracement into 4,145–4,160.\nEURUSD SELL is also valid conditionally, with 1.1245–1.1252 as the preferred POI.\nDo not chase either move at current levels.\n\nEducational market analysis — not financial advice.\n\n#XAUUSD #Gold #EURUSD #Forex #SMC #PriceAction",
-  "assets": ["EURUSD","XAUUSD"],
+  "text": "🧠 FOREX SMC MARKET MAP — EURCHF + EURCAD\n\nFresh market data | Daily → 4H → 1H → 15M\nLatest completed 1H reference used because the feed's live spot/15M window hit its per-minute limit.\nNo setup is an entry until 15M confirmation occurs.\n\n🔥 STRONGEST SETUP — EURCHF SELL\nLatest completed 1H reference: ~0.9319\n\nHTF READ\n• Daily structure is bearish after the rejection from ~0.9490 and the sharp breakdown through 0.9360.\n• 4H rejected ~0.9369 and expanded lower toward 0.9296.\n• 1H is recovering from the selloff, creating a potential retracement rather than a confirmed reversal.\n\n🎯 PRIMARY SHORT\nWait for a retracement into 0.9328–0.9336, then require bearish 15M displacement/reclaim.\n\nTargets:\n→ 0.9312\n→ 0.92963\n→ 0.9271\n\nInvalidation: sustained acceptance above ~0.9341.\nStronger structural invalidation above ~0.9370.\n\n🟠 EURCAD SELL — SECONDARY\nLatest completed 1H reference: ~1.5923\n\nHTF READ\n• Daily structure remains bearish after rejection from ~1.6140 and the subsequent break toward 1.5908.\n• 4H structure is bearish; price has begun recovering from the 1.59075 low.\n• The recovery is treated as a retracement while price remains below the 1.5980–1.6005 supply area.\n\n🎯 PRIMARY SHORT\nWait for a retracement into 1.5935–1.5950, then require bearish 15M displacement/reclaim.\n\nTargets:\n→ 1.5912\n→ 1.59075\n→ 1.5888\n\nInvalidation: sustained acceptance above ~1.5962.\nStronger structural invalidation above ~1.60045.\n\n⚠️ SMC VERDICT\nEURCHF SELL is the cleaner setup because the higher-timeframe breakdown is more pronounced and the POI sits closer to the current retracement.\nEURCAD SELL is also valid conditionally, but patience is required for price to return to the preferred zone.\n\nDo not chase either pair at the current reference levels.\n\nEducational market analysis — not financial advice.\n\n#EURCHF #EURCAD #Forex #SMC #PriceAction",
+  "assets": [
+    "EURCHF",
+    "EURCAD"
+  ],
   "timeframe": "Daily+4H+1H+15M",
-  "timestamp": "2026-10-07T05:15:00Z",
-  "source": "ChatGPT + Twelve Data OHLCV + current market context",
+  "timestamp": "2026-10-07T21:22:00Z",
+  "source": "ChatGPT + Twelve Data OHLCV",
   "test": false,
   "live_forex_data": true,
   "session": "Global",
   "analysis": {
-    "EURUSD": {
+    "EURCHF": {
       "bias": "bearish",
       "setup": "short_retest",
-      "zone": "1.1245-1.1252",
+      "zone": "0.9328-0.9336",
       "confirmation": "15M bearish displacement/reclaim",
-      "targets": ["1.12285","1.12023","1.11870"],
-      "invalidation": "1.12660",
-      "stronger_invalidation": "1.12786",
-      "liquidity": "1.12285-1.12023",
-      "poi": "1.1245-1.1252"
+      "targets": [
+        "0.9312",
+        "0.92963",
+        "0.9271"
+      ],
+      "invalidation": "0.9341",
+      "stronger_invalidation": "0.93696",
+      "liquidity": "0.9312-0.92963",
+      "poi": "0.9328-0.9336"
     },
-    "XAUUSD": {
+    "EURCAD": {
       "bias": "bearish",
       "setup": "short_retest",
-      "zone": "4145-4160",
+      "zone": "1.5935-1.5950",
       "confirmation": "15M bearish displacement/reclaim",
-      "targets": ["4133","4115","4108"],
-      "invalidation": "4169",
-      "stronger_invalidation": "4184",
-      "liquidity": "4133-4108",
-      "poi": "4145-4160"
+      "targets": [
+        "1.5912",
+        "1.59075",
+        "1.5888"
+      ],
+      "invalidation": "1.5962",
+      "stronger_invalidation": "1.60045",
+      "liquidity": "1.5912-1.59075",
+      "poi": "1.5935-1.5950"
     }
   }
 }
