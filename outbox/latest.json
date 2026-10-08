@@ -1,45 +1,29 @@
 {
-  "text": "🧠 FOREX SMC MARKET MAP — EURCHF + EURCAD\n\nFresh market data | Daily → 4H → 1H → 15M\nLatest completed 1H reference used because the feed's live spot/15M window hit its per-minute limit.\nNo setup is an entry until 15M confirmation occurs.\n\n🔥 STRONGEST SETUP — EURCHF SELL\nLatest completed 1H reference: ~0.9319\n\nHTF READ\n• Daily structure is bearish after the rejection from ~0.9490 and the sharp breakdown through 0.9360.\n• 4H rejected ~0.9369 and expanded lower toward 0.9296.\n• 1H is recovering from the selloff, creating a potential retracement rather than a confirmed reversal.\n\n🎯 PRIMARY SHORT\nWait for a retracement into 0.9328–0.9336, then require bearish 15M displacement/reclaim.\n\nTargets:\n→ 0.9312\n→ 0.92963\n→ 0.9271\n\nInvalidation: sustained acceptance above ~0.9341.\nStronger structural invalidation above ~0.9370.\n\n🟠 EURCAD SELL — SECONDARY\nLatest completed 1H reference: ~1.5923\n\nHTF READ\n• Daily structure remains bearish after rejection from ~1.6140 and the subsequent break toward 1.5908.\n• 4H structure is bearish; price has begun recovering from the 1.59075 low.\n• The recovery is treated as a retracement while price remains below the 1.5980–1.6005 supply area.\n\n🎯 PRIMARY SHORT\nWait for a retracement into 1.5935–1.5950, then require bearish 15M displacement/reclaim.\n\nTargets:\n→ 1.5912\n→ 1.59075\n→ 1.5888\n\nInvalidation: sustained acceptance above ~1.5962.\nStronger structural invalidation above ~1.60045.\n\n⚠️ SMC VERDICT\nEURCHF SELL is the cleaner setup because the higher-timeframe breakdown is more pronounced and the POI sits closer to the current retracement.\nEURCAD SELL is also valid conditionally, but patience is required for price to return to the preferred zone.\n\nDo not chase either pair at the current reference levels.\n\nEducational market analysis — not financial advice.\n\n#EURCHF #EURCAD #Forex #SMC #PriceAction",
+  "text": "🧠 USDJPY SMC MARKET MAP\n\nFresh market data | Daily → 4H → 1H → 15M\nLatest completed 15M candle used for confirmation.\nNo setup is an entry until 15M confirmation occurs.\n\n🔥 USDJPY BUY — RETEST SETUP\n\nHTF READ\n• Daily structure remains bullish, with price holding the broader 157.00–158.00 advance.\n• 4H structure remains bullish despite the rejection from the ~158.39 liquidity area.\n• 1H pulled back sharply into the 157.75–158.10 region before recovering.\n• The latest completed 15M sequence shows the pullback stabilising around 158.00.\n\n🎯 PRIMARY LONG\nWait for a retest into 157.95–158.08, then require bullish 15M displacement/reclaim.\n\nTargets:\n→ 158.30\n→ 158.40\n→ 158.50\n\nInvalidation: sustained loss of ~157.86.\nStronger structural invalidation below ~157.63.\n\n⚠️ MACRO / POLICY RISK\nThe dollar is trading near elevated levels against the yen. Reuters reports the BOJ is seeing broadening inflationary pressure and that markets expect another rate hike later this year, which increases policy/intervention risk around extended USDJPY levels. citeturn0news7turn0news8\n\n⚠️ SMC VERDICT\nBullish bias remains valid, but the preferred trade is the retracement + 15M confirmation.\nDo not chase USDJPY after a sharp move back toward 158.30+.\n\nEducational market analysis — not financial advice.\n\n#USDJPY #Forex #SMC #PriceAction #JPY",
   "assets": [
-    "EURCHF",
-    "EURCAD"
+    "USDJPY"
   ],
   "timeframe": "Daily+4H+1H+15M",
-  "timestamp": "2026-10-07T21:22:00Z",
-  "source": "ChatGPT + Twelve Data OHLCV",
+  "timestamp": "2026-10-08T08:27:00Z",
+  "source": "ChatGPT + Twelve Data OHLCV + current market context",
   "test": false,
   "live_forex_data": true,
-  "session": "Global",
+  "session": "Asia",
   "analysis": {
-    "EURCHF": {
-      "bias": "bearish",
-      "setup": "short_retest",
-      "zone": "0.9328-0.9336",
-      "confirmation": "15M bearish displacement/reclaim",
+    "USDJPY": {
+      "bias": "bullish",
+      "setup": "long_retest",
+      "zone": "157.95-158.08",
+      "confirmation": "15M bullish displacement/reclaim",
       "targets": [
-        "0.9312",
-        "0.92963",
-        "0.9271"
+        "158.30",
+        "158.40",
+        "158.50"
       ],
-      "invalidation": "0.9341",
-      "stronger_invalidation": "0.93696",
-      "liquidity": "0.9312-0.92963",
-      "poi": "0.9328-0.9336"
-    },
-    "EURCAD": {
-      "bias": "bearish",
-      "setup": "short_retest",
-      "zone": "1.5935-1.5950",
-      "confirmation": "15M bearish displacement/reclaim",
-      "targets": [
-        "1.5912",
-        "1.59075",
-        "1.5888"
-      ],
-      "invalidation": "1.5962",
-      "stronger_invalidation": "1.60045",
-      "liquidity": "1.5912-1.59075",
-      "poi": "1.5935-1.5950"
+      "invalidation": "157.86",
+      "stronger_invalidation": "157.63",
+      "liquidity": "158.30-158.50",
+      "poi": "157.95-158.08"
     }
   }
 }
