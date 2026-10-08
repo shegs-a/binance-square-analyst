@@ -1,29 +1,30 @@
 {
-  "text": "🧠 USDJPY SMC MARKET MAP\n\nFresh market data | Daily → 4H → 1H → 15M\nLatest completed 15M candle used for confirmation.\nNo setup is an entry until 15M confirmation occurs.\n\n🔥 USDJPY BUY — RETEST SETUP\n\nHTF READ\n• Daily structure remains bullish, with price holding the broader 157.00–158.00 advance.\n• 4H structure remains bullish despite the rejection from the ~158.39 liquidity area.\n• 1H pulled back sharply into the 157.75–158.10 region before recovering.\n• The latest completed 15M sequence shows the pullback stabilising around 158.00.\n\n🎯 PRIMARY LONG\nWait for a retest into 157.95–158.08, then require bullish 15M displacement/reclaim.\n\nTargets:\n→ 158.30\n→ 158.40\n→ 158.50\n\nInvalidation: sustained loss of ~157.86.\nStronger structural invalidation below ~157.63.\n\n⚠️ MACRO / POLICY RISK\nThe dollar is trading near elevated levels against the yen. Reuters reports the BOJ is seeing broadening inflationary pressure and that markets expect another rate hike later this year, which increases policy/intervention risk around extended USDJPY levels. citeturn0news7turn0news8\n\n⚠️ SMC VERDICT\nBullish bias remains valid, but the preferred trade is the retracement + 15M confirmation.\nDo not chase USDJPY after a sharp move back toward 158.30+.\n\nEducational market analysis — not financial advice.\n\n#USDJPY #Forex #SMC #PriceAction #JPY",
+  "text": "🧠 XAUUSD SMC MARKET MAP\n\nFresh market data | Daily → 4H → 1H → 15M\nCurrent reference: ~$4,129\nNo setup is an entry until 15M confirmation occurs.\n\n🔥 XAUUSD SELL — RETRACEMENT SETUP\n\nHTF READ\n• Daily structure remains bearish after the sharp rejection from ~$4,184 and the subsequent breakdown toward ~$4,062.\n• The latest completed 4H candle closed around $4,100 after the selloff.\n• 1H/15M have recovered sharply from the $4,100 area, so chasing a short at $4,129 is poor R:R.\n• The preferred play is to sell the retracement into overhead supply.\n\n🎯 PRIMARY SHORT\nWait for a retracement into $4,138–$4,148, then require bearish 15M displacement/reclaim.\n\nTargets:\n→ $4,110\n→ $4,100\n→ $4,062\n\nInvalidation: sustained acceptance above ~$4,160.\nStronger structural invalidation above ~$4,184.\n\n⚠️ MACRO BACKDROP\nGold remains under pressure from the stronger dollar and elevated yields. Reuters reported spot gold recovering modestly from a two-month low around $4,133, while the Fed minutes reinforced expectations that another rate increase could occur later this year. citeturn0search0turn0news8\n\n⚠️ SMC VERDICT\nXAUUSD remains bearish on the higher timeframes, but the current rebound means **do not chase the short**.\nThe cleaner setup is a 4,138–4,148 retracement followed by 15M bearish confirmation.\n\nEducational market analysis — not financial advice.\n\n#XAUUSD #Gold #SMC #PriceAction",
   "assets": [
-    "USDJPY"
+    "XAUUSD"
   ],
   "timeframe": "Daily+4H+1H+15M",
-  "timestamp": "2026-10-08T08:27:00Z",
+  "timestamp": "2026-10-08T08:29:00Z",
   "source": "ChatGPT + Twelve Data OHLCV + current market context",
   "test": false,
   "live_forex_data": true,
   "session": "Asia",
   "analysis": {
-    "USDJPY": {
-      "bias": "bullish",
-      "setup": "long_retest",
-      "zone": "157.95-158.08",
-      "confirmation": "15M bullish displacement/reclaim",
+    "XAUUSD": {
+      "bias": "bearish",
+      "setup": "short_retest",
+      "zone": "4138-4148",
+      "confirmation": "15M bearish displacement/reclaim",
       "targets": [
-        "158.30",
-        "158.40",
-        "158.50"
+        "4110",
+        "4100",
+        "4062"
       ],
-      "invalidation": "157.86",
-      "stronger_invalidation": "157.63",
-      "liquidity": "158.30-158.50",
-      "poi": "157.95-158.08"
+      "invalidation": "4160",
+      "stronger_invalidation": "4184",
+      "liquidity": "4110-4062",
+      "poi": "4138-4148",
+      "current": "4129.16013"
     }
   }
 }
