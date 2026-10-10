@@ -1,30 +1,55 @@
 {
-  "text": "🧠 XAUUSD SMC MARKET MAP\n\nFresh market data | Daily → 4H → 1H → 15M\nCurrent reference: ~$4,129\nNo setup is an entry until 15M confirmation occurs.\n\n🔥 XAUUSD SELL — RETRACEMENT SETUP\n\nHTF READ\n• Daily structure remains bearish after the sharp rejection from ~$4,184 and the subsequent breakdown toward ~$4,062.\n• The latest completed 4H candle closed around $4,100 after the selloff.\n• 1H/15M have recovered sharply from the $4,100 area, so chasing a short at $4,129 is poor R:R.\n• The preferred play is to sell the retracement into overhead supply.\n\n🎯 PRIMARY SHORT\nWait for a retracement into $4,138–$4,148, then require bearish 15M displacement/reclaim.\n\nTargets:\n→ $4,110\n→ $4,100\n→ $4,062\n\nInvalidation: sustained acceptance above ~$4,160.\nStronger structural invalidation above ~$4,184.\n\n⚠️ MACRO BACKDROP\nGold remains under pressure from the stronger dollar and elevated yields. Reuters reported spot gold recovering modestly from a two-month low around $4,133, while the Fed minutes reinforced expectations that another rate increase could occur later this year. citeturn0search0turn0news8\n\n⚠️ SMC VERDICT\nXAUUSD remains bearish on the higher timeframes, but the current rebound means **do not chase the short**.\nThe cleaner setup is a 4,138–4,148 retracement followed by 15M bearish confirmation.\n\nEducational market analysis — not financial advice.\n\n#XAUUSD #Gold #SMC #PriceAction",
+  "text": "🧠 DAILY SMC MARKET MAP — BTC + ETH + BNB\n\nFresh Binance Spot data | Daily → 4H → 1H → 15M\nReference prices: BTC ~$82,895 | ETH ~$2,497 | BNB ~$750\nNo setup is an entry until 15M confirmation occurs.\n\n🔥 BTCUSDT SELL — PRIMARY SETUP\nHTF READ\n• Daily/4H structure is bearish after the drop from the $87K area to ~$80.4K.\n• Price has rebounded into $82.9K and is approaching the $83.5K resistance / prior breakdown area.\n• The 1H rebound is corrective until price reclaims and holds above resistance.\n\n🎯 SHORT POI\nWait for $82,950–$83,500 and require bearish 15M displacement/reclaim.\nTargets: $82,400 → $81,600 → $80,390\nInvalidation: sustained acceptance above ~$83,700.\n\n🟠 ETHUSDT SELL — CONDITIONAL\nHTF READ\n• Daily/4H structure remains bearish after the sharp breakdown toward $2,406.\n• Price is consolidating near $2,497 beneath nearby supply.\n• Avoid shorting the middle of the range; wait for a retracement and rejection.\n\n🎯 SHORT POI\nWait for $2,498–$2,512 and require bearish 15M displacement/reclaim.\nTargets: $2,474 → $2,440 → $2,406\nInvalidation: sustained acceptance above ~$2,522.\n\n🟡 BNBUSDT SELL — SECONDARY\nHTF READ\n• Daily/4H remain bearish after the fall from ~$810 toward ~$717.\n• The current rebound has lifted price to ~$750, approaching resistance.\n• A continuation short is conditional on rejection; do not sell into a strong 15M breakout.\n\n🎯 SHORT POI\nWait for $751–$758 and require bearish 15M displacement/reclaim.\nTargets: $742 → $736 → $717\nInvalidation: sustained acceptance above ~$762.\n\n⚠️ SMC VERDICT\nBTC is the primary setup because its rebound is testing a clearer prior breakdown area. ETH and BNB are alternatives, but all three are conditional shorts—not market sells.\nIf price does not retrace into the POI and confirm, there is no trade.\n\nEducational market analysis — not financial advice.\n\n#BTC #ETH #BNB #SMC #PriceAction #BinanceSquare",
   "assets": [
-    "XAUUSD"
+    "BTCUSDT",
+    "ETHUSDT",
+    "BNBUSDT"
   ],
   "timeframe": "Daily+4H+1H+15M",
-  "timestamp": "2026-10-08T08:29:00Z",
-  "source": "ChatGPT + Twelve Data OHLCV + current market context",
+  "timestamp": "2026-10-10T09:26:33Z",
+  "source": "ChatGPT + Binance Spot OHLCV",
   "test": false,
-  "live_forex_data": true,
-  "session": "Asia",
+  "live_binance_data": true,
+  "session": "Daily",
   "analysis": {
-    "XAUUSD": {
+    "BTCUSDT": {
       "bias": "bearish",
       "setup": "short_retest",
-      "zone": "4138-4148",
+      "zone": "82950-83500",
       "confirmation": "15M bearish displacement/reclaim",
       "targets": [
-        "4110",
-        "4100",
-        "4062"
+        "82400",
+        "81600",
+        "80390"
       ],
-      "invalidation": "4160",
-      "stronger_invalidation": "4184",
-      "liquidity": "4110-4062",
-      "poi": "4138-4148",
-      "current": "4129.16013"
+      "invalidation": "83700",
+      "poi": "82950-83500"
+    },
+    "ETHUSDT": {
+      "bias": "bearish",
+      "setup": "short_retest",
+      "zone": "2498-2512",
+      "confirmation": "15M bearish displacement/reclaim",
+      "targets": [
+        "2474",
+        "2440",
+        "2406"
+      ],
+      "invalidation": "2522",
+      "poi": "2498-2512"
+    },
+    "BNBUSDT": {
+      "bias": "bearish",
+      "setup": "short_retest",
+      "zone": "751-758",
+      "confirmation": "15M bearish displacement/reclaim",
+      "targets": [
+        "742",
+        "736",
+        "717"
+      ],
+      "invalidation": "762",
+      "poi": "751-758"
     }
   }
 }
